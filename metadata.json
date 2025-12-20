@@ -1,0 +1,7 @@
+{
+  "name": "ECE 2K26 - Beyond Earth",
+  "description": "An ultra-advanced futuristic symposium website for ECE Department featuring space-tech aesthetics, GSAP animations, and Three.js visuals.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
