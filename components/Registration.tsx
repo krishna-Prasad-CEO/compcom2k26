@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { PLANS } from '../constants.ts';
+import { PLANS } from '../constants';
+import { PricePlan } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,7 +66,7 @@ const Waveform: React.FC<{ type: 'sine' | 'square' | 'rf'; active: boolean; colo
   );
 };
 
-const FrequencyBand: React.FC<{ plan: any; index: number; isSelected: boolean; onSelect: () => void }> = ({ plan, index, isSelected, onSelect }) => {
+const FrequencyBand: React.FC<{ plan: PricePlan; index: number; isSelected: boolean; onSelect: () => void }> = ({ plan, index, isSelected, onSelect }) => {
   const bandRef = useRef<HTMLDivElement>(null);
   const height = 150 + index * 30; // Reduced base height for better mobile fit
   const width = 70 + (index % 3) * 15;
@@ -102,7 +103,7 @@ const FrequencyBand: React.FC<{ plan: any; index: number; isSelected: boolean; o
 
       {/* Base Value */}
       <div className="mt-3 font-mono text-[8px] text-slate-500 uppercase tracking-widest text-center">
-        CH_0{index + 1}<br/>{plan.price}Hz
+        CH_0{index + 1}<br />{plan.price}Hz
       </div>
     </div>
   );
@@ -110,8 +111,6 @@ const FrequencyBand: React.FC<{ plan: any; index: number; isSelected: boolean; o
 
 const Registration: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(2);
-  const [isAllocating, setIsAllocating] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const spectrumRef = useRef<HTMLDivElement>(null);
 
@@ -143,37 +142,11 @@ const Registration: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleAllocate = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsAllocating(true);
-    setTimeout(() => {
-      setIsAllocating(false);
-      setIsSuccess(true);
-    }, 2000);
-  };
-
-  if (isSuccess) {
-    return (
-      <section className="relative py-32 sm:py-48 bg-[#020617] text-center px-6">
-        <div className="max-w-xl mx-auto border border-yellow-500/30 p-8 sm:p-12 rounded-[1.5rem] sm:rounded-[2rem] bg-yellow-500/5 backdrop-blur-3xl">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-yellow-500 rounded-full mx-auto mb-6 sm:mb-8 flex items-center justify-center animate-pulse">
-            <div className="w-8 h-[2px] bg-yellow-500" />
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-orbitron font-black text-white mb-4">SLOT ALLOCATED</h2>
-          <p className="text-slate-400 font-mono text-[10px] sm:text-sm tracking-widest uppercase mb-10">Signal clarity stabilized. Mission parameters updated. Welcome to ECE 2K26.</p>
-          <button onClick={() => setIsSuccess(false)} className="px-8 sm:px-10 py-3.5 sm:py-4 border border-yellow-500 text-yellow-500 font-orbitron text-[10px] tracking-[0.3em] uppercase hover:bg-yellow-500 hover:text-black transition-all">
-            Return to Deck
-          </button>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section ref={sectionRef} id="register" className="relative py-20 sm:py-48 px-6 bg-[#020617] overflow-hidden">
       {/* Background Signal Grid */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-        style={{ backgroundImage: 'linear-gradient(90deg, #F97316 1px, transparent 1px), linear-gradient(#F97316 1px, transparent 1px)', backgroundSize: '60px 60px' }} 
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{ backgroundImage: 'linear-gradient(90deg, #F97316 1px, transparent 1px), linear-gradient(#F97316 1px, transparent 1px)', backgroundSize: '60px 60px' }}
       />
 
       <div className="max-w-[1440px] mx-auto relative z-10">
@@ -192,11 +165,14 @@ const Registration: React.FC = () => {
           <div ref={spectrumRef} className="relative flex items-end justify-start sm:justify-center gap-4 sm:gap-6 min-w-max px-6 h-[350px] sm:h-[450px]">
             {PLANS.map((plan, idx) => (
               <div key={idx} className="freq-band">
-                <FrequencyBand 
-                  plan={plan} 
-                  index={idx} 
+                <FrequencyBand
+                  plan={plan}
+                  index={idx}
                   isSelected={selectedPlan === idx}
-                  onSelect={() => setSelectedPlan(idx)}
+                  onSelect={() => {
+                    setSelectedPlan(idx);
+                    if (plan.link) window.open(plan.link, '_blank');
+                  }}
                 />
               </div>
             ))}
@@ -205,76 +181,6 @@ const Registration: React.FC = () => {
           </div>
         </div>
 
-        {/* Signal Calibration Console */}
-        <div className="max-w-4xl mx-auto border border-white/5 bg-white/5 backdrop-blur-3xl rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-16 relative mt-12 sm:mt-0">
-          <div className="absolute top-4 sm:top-8 right-6 sm:right-12 text-[7px] sm:text-[8px] font-mono text-white/20">NODE_STABLE</div>
-          
-          <div className="mb-10 sm:mb-12">
-            <h3 className="text-lg sm:text-xl font-orbitron font-bold text-white uppercase tracking-widest mb-2 flex items-center gap-3 sm:gap-4">
-              <span className="w-6 sm:w-8 h-[2px] bg-yellow-500" />
-              Calibration Panel
-            </h3>
-            <p className="text-slate-500 font-mono text-[9px] uppercase tracking-widest">Verify_Communication_Uplink</p>
-          </div>
-
-          <form onSubmit={handleAllocate} className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 sm:gap-y-10">
-            <div className="relative">
-              <label className="block font-mono text-[8px] text-orange-500 uppercase tracking-widest mb-1 ml-1">Source_ID</label>
-              <input required type="text" placeholder="FULL_NAME" className="w-full bg-transparent border-b border-white/10 px-2 py-2 text-white font-orbitron text-xs sm:text-sm focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-white/5" />
-            </div>
-            <div className="relative">
-              <label className="block font-mono text-[8px] text-orange-500 uppercase tracking-widest mb-1 ml-1">Comm_Channel</label>
-              <input required type="tel" placeholder="+91_MOBILE" className="w-full bg-transparent border-b border-white/10 px-2 py-2 text-white font-orbitron text-xs sm:text-sm focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-white/5" />
-            </div>
-            <div className="relative">
-              <label className="block font-mono text-[8px] text-orange-500 uppercase tracking-widest mb-1 ml-1">Packet_Dest</label>
-              <input required type="email" placeholder="NEURAL_MAIL" className="w-full bg-transparent border-b border-white/10 px-2 py-2 text-white font-orbitron text-xs sm:text-sm focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-white/5" />
-            </div>
-            <div className="relative">
-              <label className="block font-mono text-[8px] text-orange-500 uppercase tracking-widest mb-1 ml-1">Sector_ID</label>
-              <input required type="text" placeholder="INSTITUTION" className="w-full bg-transparent border-b border-white/10 px-2 py-2 text-white font-orbitron text-xs sm:text-sm focus:outline-none focus:border-yellow-500 transition-colors placeholder:text-white/5" />
-            </div>
-
-            <div className="md:col-span-2 mt-6 sm:mt-8 flex flex-col items-center gap-6 sm:gap-8">
-              <div className="w-full max-w-xs flex items-center gap-4 opacity-40">
-                <span className="font-mono text-[7px] text-white">CLARITY:</span>
-                <div className="grow h-1 bg-white/10 rounded-full overflow-hidden">
-                   <div className="h-full bg-yellow-500 w-[65%] animate-pulse" />
-                </div>
-              </div>
-
-              <button 
-                type="submit"
-                disabled={isAllocating}
-                className="group relative w-full sm:w-auto px-12 sm:px-20 py-5 sm:py-6 overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95"
-              >
-                <div className="absolute inset-0 bg-yellow-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                <div className="relative z-10 font-orbitron font-black text-sm sm:text-lg uppercase tracking-[0.2em] sm:tracking-[0.3em] text-yellow-500 group-hover:text-black transition-colors flex items-center justify-center gap-3 sm:gap-4">
-                  {isAllocating ? (
-                    <>
-                      <span className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      CALIBRATING...
-                    </>
-                  ) : "ALLOCATE_SLOT"}
-                </div>
-                <div className="absolute inset-0 border border-yellow-500" />
-              </button>
-            </div>
-          </form>
-        </div>
-
-        {/* Secondary Info */}
-        <div className="mt-16 sm:mt-20 flex flex-wrap justify-center gap-8 sm:gap-12 opacity-30">
-          <div className="flex items-center gap-2 sm:gap-3 font-mono text-[8px] sm:text-[9px] text-white uppercase tracking-widest">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> Accommodation_Available
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3 font-mono text-[8px] sm:text-[9px] text-white uppercase tracking-widest">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> Offline_Sync
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3 font-mono text-[8px] sm:text-[9px] text-white uppercase tracking-widest">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-500" /> Bulk_Discounts
-          </div>
-        </div>
       </div>
 
       <style>{`

@@ -11,11 +11,11 @@ import BackgroundCanvas from './components/BackgroundCanvas.tsx';
 import GlitchOverlay from './components/GlitchOverlay.tsx';
 import CreatorOverride from './components/CreatorOverride.tsx';
 import IntroAnimation from './components/IntroAnimation.tsx';
-import { 
-  SatelliteBurstDivider, 
-  CircuitTraceDivider, 
-  SignalWaveDivider, 
-  RadarSweepDivider 
+import {
+  SatelliteBurstDivider,
+  CircuitTraceDivider,
+  SignalWaveDivider,
+  RadarSweepDivider
 } from './components/SectionDividers.tsx';
 
 const App: React.FC = () => {
@@ -24,7 +24,7 @@ const App: React.FC = () => {
   useEffect(() => {
     // Force top position on refresh to align with intro
     window.scrollTo(0, 0);
-    
+
     // Disable scrolling while intro is active
     if (isIntroActive) {
       document.body.style.overflow = 'hidden';
@@ -36,12 +36,12 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen relative overflow-x-hidden selection:bg-orange-500 selection:text-white bg-[#020617]">
       {isIntroActive && <IntroAnimation onComplete={() => setIsIntroActive(false)} />}
-      
+
       <div className={`transition-opacity duration-1000 ${isIntroActive ? 'opacity-0' : 'opacity-100'}`}>
         <BackgroundCanvas />
         <GlitchOverlay />
         <Header />
-        
+
         {/* HUD Data Streams */}
         <div className="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-8 opacity-20 pointer-events-none z-50 hidden xl:flex">
           <div className="flex flex-col gap-1 font-mono text-[8px] uppercase tracking-tighter text-orange-500">
@@ -60,17 +60,17 @@ const App: React.FC = () => {
 
         <main className="relative z-10">
           <Hero />
-          
+
           <div className="relative z-20 bg-[#020617]">
             <SatelliteBurstDivider />
             <Events />
-            
+
             <CircuitTraceDivider />
             <Workshops />
-            
-            <SignalWaveDivider />
             <Registration />
-            
+
+            <SignalWaveDivider />
+
             <RadarSweepDivider />
             <Contact />
 

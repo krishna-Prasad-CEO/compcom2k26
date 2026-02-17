@@ -63,19 +63,19 @@ const CreatorOverride: React.FC = () => {
   return (
     <div className="fixed inset-0 z-[10000] bg-[#020617] font-mono overflow-y-auto overflow-x-hidden flex flex-col">
       {/* Background Layer: Grid & Noise */}
-      <div className="fixed inset-0 grid-lines opacity-0 pointer-events-none z-0" 
-        style={{ backgroundImage: 'linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px), linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+      <div className="fixed inset-0 grid-lines opacity-0 pointer-events-none z-0"
+        style={{ backgroundImage: 'linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px), linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px)', backgroundSize: '40px 40px' }}
       />
       <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay z-0" />
 
       {/* Main Container */}
       <div className="relative z-10 min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 sm:p-10 md:p-20">
-        
+
         {/* HUD Elements - Scaled for Mobile */}
         <div className="absolute top-4 left-4 sm:top-10 sm:left-12 text-[6px] xs:text-[8px] sm:text-[10px] text-orange-500 tracking-[0.3em] status-line opacity-0 uppercase font-bold whitespace-nowrap">
           [ SYSTEM OVERRIDE DETECTED ] :: 0xCF2_STABLE
         </div>
-        
+
         <div className="absolute bottom-4 right-4 sm:bottom-10 sm:right-12 text-[6px] sm:text-[8px] text-white/20 tracking-[0.5em] uppercase hidden sm:block">
           LOG_PIPE: 29.04.2025 // MODE: CREATOR_OVERRIDE
         </div>
@@ -83,31 +83,31 @@ const CreatorOverride: React.FC = () => {
         {/* Console Interface */}
         <div ref={hudRef} className="max-w-4xl w-full">
           <div className="space-y-3 sm:space-y-6">
-            
+
             {stage >= 1 && (
               <p className="text-yellow-500 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
                 &gt; THIS INTERFACE WAS NOT DESIGNED.
               </p>
             )}
-            
+
             {stage >= 2 && (
               <p className="text-white/60 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
                 &gt; IT WAS CONTROLLED.
               </p>
             )}
-            
+
             {stage >= 3 && (
               <p className="text-white/50 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
                 &gt; ANIMATIONS WERE TIMED. SYSTEMS WERE CONNECTED.
               </p>
             )}
-            
+
             {stage >= 4 && (
               <p className="text-white/40 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
                 &gt; EVERY SIGNAL WAS PLACED MANUALLY.
               </p>
             )}
-            
+
             <div className="pt-8 sm:pt-16">
               {stage >= 5 && (
                 <div className="space-y-4">
@@ -122,17 +122,15 @@ const CreatorOverride: React.FC = () => {
                   </h2>
                 </div>
               )}
-              
+
               {stage >= 6 && (
                 <div className="mt-10 sm:mt-16 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-center">
-                  <a 
-                    href="https://www.linkedin.com/in/krishna-prasad-s-59133a280" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <a
+                    href="tel:9489401725"
                     className="group relative px-5 py-3 border border-yellow-500/30 text-yellow-500 text-[8px] xs:text-[9px] sm:text-[11px] tracking-[0.2em] uppercase overflow-hidden hover:bg-yellow-500/10 transition-colors"
                   >
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-yellow-500/50 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-                    [ LINKEDIN_UPLINK ]
+                    [ +91 94894 01725 ]
                   </a>
                   <p className="text-white/10 text-[6px] xs:text-[7px] sm:text-[9px] tracking-[0.5em] sm:tracking-[1em] uppercase animate-pulse">
                     &gt; SYSTEM RETURNING TO USER MODE

@@ -18,4 +18,5 @@ export interface PricePlan {
   title: string;
   price: number;
   features: string;
+  link: string;
 }

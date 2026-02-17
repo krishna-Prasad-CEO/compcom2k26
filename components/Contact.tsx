@@ -2,13 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-const contacts = [
-  { name: 'Jeblin Aldo D', phone: '7395838806' },
-  { name: 'Rohith Kumar E B', phone: '8220340041' },
-  { name: 'Aravind C', phone: '7904242754' },
-  { name: 'Sharumathi P', phone: '7010955391' },
-  { name: 'Sowdharsshini M', phone: '8778508379' }
-];
+import { CONTACTS as contacts } from '../constants';
 
 const SignalPod: React.FC<{ contact: typeof contacts[0], index: number }> = ({ contact, index }) => {
   const capsuleRef = useRef<HTMLDivElement>(null);
@@ -71,13 +65,13 @@ const SignalPod: React.FC<{ contact: typeof contacts[0], index: number }> = ({ c
   };
 
   return (
-    <div 
+    <div
       onMouseEnter={handleHover}
       onMouseLeave={handleHoverExit}
       onClick={handleClick}
       className="relative w-full h-28 sm:h-36 cursor-pointer group mb-4 sm:mb-6 [perspective:1000px]"
     >
-      <div 
+      <div
         ref={capsuleRef}
         className="absolute inset-0 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[1.5rem] sm:rounded-[2.5rem] flex items-center px-6 sm:px-8 transition-all overflow-hidden"
       >
@@ -103,20 +97,20 @@ const Contact: React.FC = () => {
     <section id="contact" className="relative py-20 sm:py-48 px-6 overflow-hidden bg-[#010409]">
       <div className="max-w-[1440px] mx-auto relative z-10">
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 lg:gap-24 items-start">
-          
+
           <div className="xl:col-span-4 xl:sticky xl:top-32">
             <div className="inline-block px-4 sm:px-5 py-1.5 sm:py-2 border border-orange-500/30 rounded-full mb-8 sm:mb-10 bg-orange-500/5">
               <p className="text-[8px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.5em] animate-pulse">Comms_Array_Sync</p>
             </div>
             <h2 className="text-5xl sm:text-8xl md:text-9xl font-orbitron font-black text-white mb-6 sm:mb-10 tracking-tighter leading-[0.9]">
-              SIGNAL <br/><span className="text-yellow-500">BASE</span>
+              SIGNAL <br /><span className="text-yellow-500">BASE</span>
             </h2>
             <p className="text-slate-400 text-base sm:text-xl font-orbitron font-light leading-relaxed max-w-md">
               Encrypted transmission pods are live. Connect with mission directors for strategic coordination.
             </p>
           </div>
 
-          <div className="xl:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 lg:pt-16">
+          <div className="xl:col-span-8 m-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 lg:pt-16">
             {contacts.map((contact, idx) => (
               <SignalPod key={idx} contact={contact} index={idx} />
             ))}

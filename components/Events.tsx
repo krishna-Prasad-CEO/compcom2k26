@@ -25,20 +25,20 @@ const EventCard: React.FC<{ event: typeof ALL_EVENTS[0]; index: number }> = ({ e
         }
       });
 
-      tl.fromTo(cardRef.current, 
-        { 
-          opacity: 0, 
-          rotationX: -90, 
+      tl.fromTo(cardRef.current,
+        {
+          opacity: 0,
+          rotationX: -90,
           scale: 0.8,
-          transformOrigin: "center top" 
-        }, 
-        { 
-          opacity: 1, 
-          rotationX: 0, 
-          scale: 1, 
-          duration: 1.2, 
+          transformOrigin: "center top"
+        },
+        {
+          opacity: 1,
+          rotationX: 0,
+          scale: 1,
+          duration: 1.2,
           delay: (index % 4) * 0.15,
-          ease: "expo.out" 
+          ease: "expo.out"
         }
       );
 
@@ -55,7 +55,7 @@ const EventCard: React.FC<{ event: typeof ALL_EVENTS[0]; index: number }> = ({ e
         const { left, top, width, height } = cardRef.current.getBoundingClientRect();
         const x = (e.clientX - left) / width - 0.5;
         const y = (e.clientY - top) / height - 0.5;
-        
+
         gsap.to(innerRef.current, {
           rotateY: x * 20,
           rotateX: -y * 20,
@@ -91,17 +91,17 @@ const EventCard: React.FC<{ event: typeof ALL_EVENTS[0]; index: number }> = ({ e
   }, [index]);
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="relative group p-[1px] rounded-[1.5rem] sm:rounded-[2rem] [perspective:1200px] h-full"
     >
-      <div 
+      <div
         ref={innerRef}
         className="relative h-full bg-slate-950/90 backdrop-blur-2xl rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 flex flex-col border border-white/5 group-hover:border-yellow-500/50 transition-colors duration-500 transform-gpu"
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div className="absolute inset-0 pointer-events-none rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden opacity-10 group-hover:opacity-20 transition-opacity">
-           <div className="absolute top-0 left-0 w-full h-[2px] bg-yellow-500 animate-scan-fast" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-yellow-500 animate-scan-fast" />
         </div>
 
         <div className="flex items-center justify-between mb-6 sm:mb-8" style={{ transform: 'translateZ(30px)' }}>
@@ -109,29 +109,37 @@ const EventCard: React.FC<{ event: typeof ALL_EVENTS[0]; index: number }> = ({ e
             {event.group}
           </div>
           <div className="flex gap-1">
-             <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-yellow-500 transition-colors" />
-             <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-orange-500 transition-colors delay-75" />
+            <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-yellow-500 transition-colors" />
+            <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-orange-500 transition-colors delay-75" />
           </div>
         </div>
 
         <h3 className="text-xl sm:text-3xl font-orbitron font-black text-white mb-4 sm:mb-6 uppercase leading-[1.1] tracking-tighter group-hover:text-yellow-400 transition-colors duration-300" style={{ transform: 'translateZ(50px)' }}>
           {event.title}
         </h3>
-        
+
         <p className="text-xs sm:text-sm text-slate-400 font-light leading-relaxed mb-8 grow font-inter" style={{ transform: 'translateZ(20px)' }}>
           {event.description}
         </p>
 
         <div className="flex items-end justify-between mt-auto" style={{ transform: 'translateZ(40px)' }}>
           <div className="flex flex-col">
-             <span className="text-[7px] font-mono text-white/30 uppercase tracking-[0.2em] mb-1">Authorization</span>
-             <button className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-orbitron font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-xl ${event.group === 'TECH' ? 'bg-orange-600 text-white shadow-orange-900/20' : 'bg-yellow-500 text-slate-950 shadow-yellow-900/20'}`}>
-               Initialize
-             </button>
+            <span className="text-[7px] font-mono text-white/30 uppercase tracking-[0.2em] mb-1">Authorization</span>
+            <button
+              onClick={() => {
+                const element = document.getElementById('register');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-orbitron font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-xl ${event.group === 'TECH' ? 'bg-orange-600 text-white shadow-orange-900/20' : 'bg-yellow-500 text-slate-950 shadow-yellow-900/20'}`}
+            >
+              Initialize
+            </button>
           </div>
           <div className="text-right">
-             <p className="font-mono text-[8px] sm:text-[9px] text-white/20">LOG_REF</p>
-             <p className="font-mono text-[9px] sm:text-[11px] text-yellow-500/40">#00{index + 1}</p>
+            <p className="font-mono text-[8px] sm:text-[9px] text-white/20">LOG_REF</p>
+            <p className="font-mono text-[9px] sm:text-[11px] text-yellow-500/40">#00{index + 1}</p>
           </div>
         </div>
 
@@ -152,7 +160,7 @@ const CircuitPaths: React.FC = () => {
     paths.forEach((path) => {
       const length = path.getTotalLength();
       gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-      
+
       gsap.to(path, {
         strokeDashoffset: 0,
         duration: 3,
@@ -218,10 +226,10 @@ const Events: React.FC = () => {
   return (
     <section ref={containerRef} id="events" className="relative py-20 sm:py-40 bg-[#020617] overflow-hidden">
       <CircuitPaths />
-      
-      <div 
-        ref={scannerRef} 
-        className="absolute left-0 top-0 w-full h-[300px] bg-gradient-to-b from-transparent via-yellow-500/5 to-transparent pointer-events-none z-30" 
+
+      <div
+        ref={scannerRef}
+        className="absolute left-0 top-0 w-full h-[300px] bg-gradient-to-b from-transparent via-yellow-500/5 to-transparent pointer-events-none z-30"
       />
 
       <div className="max-w-[1440px] mx-auto px-6 relative z-10">
@@ -230,11 +238,11 @@ const Events: React.FC = () => {
             <p className="text-[8px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.5em] animate-pulse">System_Core_Access_Granted</p>
           </div>
           <h2 className="section-title-part text-4xl sm:text-8xl md:text-[9rem] font-orbitron font-black text-white leading-[0.9] tracking-tighter uppercase mb-6 sm:mb-8">
-            MISSION <br/><span className="text-yellow-500">CONTROL</span>
+            MISSION <br /><span className="text-yellow-500">CONTROL</span>
           </h2>
           <div className="section-title-part flex items-center gap-4 sm:gap-6">
-             <div className="h-px w-16 sm:w-32 bg-gradient-to-r from-orange-500 to-transparent" />
-             <p className="text-slate-500 font-mono text-[9px] sm:text-sm tracking-[0.4em] sm:tracking-[0.8em] uppercase">Event_Array_V4.9.0_Final</p>
+            <div className="h-px w-16 sm:w-32 bg-gradient-to-r from-orange-500 to-transparent" />
+            <p className="text-slate-500 font-mono text-[9px] sm:text-sm tracking-[0.4em] sm:tracking-[0.8em] uppercase">Event_Array_V4.9.0_Final</p>
           </div>
         </div>
 
@@ -245,24 +253,24 @@ const Events: React.FC = () => {
         </div>
 
         <div className="mt-20 sm:mt-32 border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-10 opacity-40">
-           <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 w-full sm:w-auto">
-              <div className="flex flex-col gap-3">
-                 <div className="w-full sm:w-48 h-1 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-yellow-500 w-[78%] animate-pulse" />
-                 </div>
-                 <p className="font-mono text-[9px] text-white">GRID_INTEGRITY: 78%</p>
+          <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 w-full sm:w-auto">
+            <div className="flex flex-col gap-3">
+              <div className="w-full sm:w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-yellow-500 w-[78%] animate-pulse" />
               </div>
-              <div className="flex flex-col gap-3">
-                 <div className="w-full sm:w-48 h-1 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-orange-500 w-[42%] animate-pulse" />
-                 </div>
-                 <p className="font-mono text-[9px] text-white">UPTIME_RELAY: 42.1S</p>
+              <p className="font-mono text-[9px] text-white">GRID_INTEGRITY: 78%</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="w-full sm:w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-orange-500 w-[42%] animate-pulse" />
               </div>
-           </div>
-           <div className="font-mono text-[9px] text-yellow-500 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-yellow-500 animate-ping" />
-              LIVE_DATA_FEED_ENCRYPTED
-           </div>
+              <p className="font-mono text-[9px] text-white">UPTIME_RELAY: 42.1S</p>
+            </div>
+          </div>
+          <div className="font-mono text-[9px] text-yellow-500 flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-yellow-500 animate-ping" />
+            LIVE_DATA_FEED_ENCRYPTED
+          </div>
         </div>
       </div>
 

@@ -48,16 +48,16 @@ const Hero: React.FC = () => {
       });
 
       tl.to(flameRef.current, { height: 180, opacity: 1, duration: 0.3 })
-        .to(rocketRef.current, { 
-          y: -window.innerHeight * 2, 
-          scale: 0.15, 
+        .to(rocketRef.current, {
+          y: -window.innerHeight * 2,
+          scale: 0.15,
           duration: 4,
           ease: "power3.in",
-          onUpdate: function() {
+          onUpdate: function () {
             if (this.progress() < 0.6) {
-               gsap.set(rocketRef.current, {
-                 x: (Math.random() - 0.5) * 8 * (1 - this.progress()),
-               });
+              gsap.set(rocketRef.current, {
+                x: (Math.random() - 0.5) * 8 * (1 - this.progress()),
+              });
             }
           }
         }, 0.2)
@@ -67,13 +67,13 @@ const Hero: React.FC = () => {
       tl.to(shockwaveRef.current, { scale: 30, opacity: 0, duration: 1, ease: "expo.out" }, 2.5);
 
       tl.set(rocketRef.current, { opacity: 0 })
-        .to(satelliteRef.current, { 
-          opacity: 1, 
-          scale: 1.5, 
-          y: -window.innerHeight * 0.4, 
-          rotation: 360, 
-          duration: 3, 
-          ease: "expo.out" 
+        .to(satelliteRef.current, {
+          opacity: 1,
+          scale: 1.5,
+          y: -window.innerHeight * 0.4,
+          rotation: 360,
+          duration: 3,
+          ease: "expo.out"
         });
 
       const panels = satelliteRef.current?.querySelectorAll('.panel');
@@ -128,16 +128,15 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 pointer-events-none z-10 p-4 sm:p-12">
         <div className="flex justify-between h-full border border-white/5 p-4 rounded-3xl">
           <div className="flex flex-col justify-between opacity-40 font-mono text-[8px]">
-             <div className="text-orange-500">
-                <p className="hidden xs:block">SAT_ID: ECE-2K26-A1</p>
-                <p>ORBIT: 14,280 KM</p>
-             </div>
-             <div className="w-8 h-8 sm:w-20 sm:h-20 border border-white/10 rounded-full flex items-center justify-center relative">
-                <div className="absolute inset-0 border-t border-orange-500 rounded-full animate-spin" />
-             </div>
+            <div className="text-orange-500">
+
+            </div>
+            <div className="w-8 h-8 sm:w-20 sm:h-20 border border-white/10 rounded-full flex items-center justify-center relative">
+              <div className="absolute inset-0 border-t border-orange-500 rounded-full animate-spin" />
+            </div>
           </div>
           <div className="flex flex-col justify-end items-end opacity-40 font-mono text-[8px]">
-             <p className="text-yellow-500 uppercase tracking-widest">Signal_Live</p>
+            <p className="text-yellow-500 uppercase tracking-widest">Signal_Live</p>
           </div>
         </div>
       </div>
@@ -149,9 +148,9 @@ const Hero: React.FC = () => {
           {renderText("ECE 2K26")}
         </h1>
         <div className="mt-6 flex items-center justify-center gap-2 sm:gap-6">
-           <div className="h-[1px] sm:h-[2px] w-6 sm:w-24 bg-orange-500" />
-           <p className="text-[10px] sm:text-xl md:text-2xl font-orbitron text-yellow-400 tracking-[0.4em] sm:tracking-[1.2em] uppercase font-bold">Beyond Earth</p>
-           <div className="h-[1px] sm:h-[2px] w-6 sm:w-24 bg-orange-500" />
+          <div className="h-[1px] sm:h-[2px] w-6 sm:w-24 bg-orange-500" />
+          <p className="text-[10px] sm:text-xl md:text-2xl font-orbitron text-yellow-400 tracking-[0.4em] sm:tracking-[1.2em] uppercase font-bold">Beyond Earth</p>
+          <div className="h-[1px] sm:h-[2px] w-6 sm:w-24 bg-orange-500" />
         </div>
         {countdown > 0 && (
           <div className="mt-8 sm:mt-12 font-mono text-[8px] sm:text-[10px] tracking-[0.4em] text-orange-500 py-1.5 px-4 sm:px-6 rounded-full border border-orange-500/20 inline-block bg-orange-500/5 backdrop-blur-sm">
@@ -162,35 +161,35 @@ const Hero: React.FC = () => {
 
       <div className="absolute bottom-[-100px] left-1/2 -translate-x-1/2 flex flex-col items-center">
         <div ref={satelliteRef} className="opacity-0 relative w-20 h-20 sm:w-48 sm:h-48 z-30">
-           <div className="w-6 h-12 sm:w-16 sm:h-28 bg-slate-800 rounded-lg mx-auto relative border border-white/10 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
-              <div className="antenna absolute -top-8 left-1/2 -translate-x-1/2 w-[2px] h-8 bg-slate-400 origin-bottom scale-y-0 opacity-0" />
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-slate-900 border border-slate-700" />
-           </div>
-           <div className="absolute top-1/2 left-0 w-full h-8 flex justify-between items-center -mt-4">
-             <div className="panel origin-right scale-x-0 opacity-0 w-10 h-8 sm:w-24 sm:h-20 bg-blue-900/40 border border-blue-500/30" />
-             <div className="panel origin-left scale-x-0 opacity-0 w-10 h-8 sm:w-24 sm:h-20 bg-blue-900/40 border border-blue-500/30" />
-           </div>
+          <div className="w-6 h-12 sm:w-16 sm:h-28 bg-slate-800 rounded-lg mx-auto relative border border-white/10 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
+            <div className="antenna absolute -top-8 left-1/2 -translate-x-1/2 w-[2px] h-8 bg-slate-400 origin-bottom scale-y-0 opacity-0" />
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-slate-900 border border-slate-700" />
+          </div>
+          <div className="absolute top-1/2 left-0 w-full h-8 flex justify-between items-center -mt-4">
+            <div className="panel origin-right scale-x-0 opacity-0 w-10 h-8 sm:w-24 sm:h-20 bg-blue-900/40 border border-blue-500/30" />
+            <div className="panel origin-left scale-x-0 opacity-0 w-10 h-8 sm:w-24 sm:h-20 bg-blue-900/40 border border-blue-500/30" />
+          </div>
         </div>
 
         <div ref={rocketRef} className="relative w-10 h-32 sm:w-20 sm:h-60 flex flex-col items-center">
-           <div className="w-0 h-0 border-l-[15px] sm:border-l-[40px] border-l-transparent border-r-[15px] sm:border-r-[40px] border-r-transparent border-b-[30px] sm:border-b-[80px] border-b-white" />
-           <div className="w-10 h-24 sm:w-20 h-44 bg-white relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-transparent" />
-           </div>
-           <div className="absolute -bottom-4 -left-4 sm:-left-10 w-4 h-20 sm:w-10 sm:h-36 bg-slate-100 rounded-b-lg" />
-           <div className="absolute -bottom-4 -right-4 sm:-right-10 w-4 h-20 sm:w-10 sm:h-36 bg-slate-100 rounded-b-lg" />
+          <div className="w-0 h-0 border-l-[15px] sm:border-l-[40px] border-l-transparent border-r-[15px] sm:border-r-[40px] border-r-transparent border-b-[30px] sm:border-b-[80px] border-b-white" />
+          <div className="w-10 h-24 sm:w-20 h-44 bg-white relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-transparent" />
+          </div>
+          <div className="absolute -bottom-4 -left-4 sm:-left-10 w-4 h-20 sm:w-10 sm:h-36 bg-slate-100 rounded-b-lg" />
+          <div className="absolute -bottom-4 -right-4 sm:-right-10 w-4 h-20 sm:w-10 sm:h-36 bg-slate-100 rounded-b-lg" />
         </div>
 
         <div ref={flameRef} className="w-10 sm:w-20 h-0 bg-gradient-to-t from-transparent via-orange-600 to-yellow-300 rounded-full opacity-0 mt-[-20px] shadow-[0_0_40px_#F97316]" />
       </div>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
-         <div className="orbital-icon absolute top-1/4 left-1/4 opacity-10">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-         </div>
-         <div className="orbital-icon absolute bottom-1/4 right-1/4 opacity-10" style={{ animationDirection: 'reverse' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" strokeWidth="1"><circle cx="12" cy="12" r="10"/></svg>
-         </div>
+        <div className="orbital-icon absolute top-1/4 left-1/4 opacity-10">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M9 9h6v6H9z" /></svg>
+        </div>
+        <div className="orbital-icon absolute bottom-1/4 right-1/4 opacity-10" style={{ animationDirection: 'reverse' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" strokeWidth="1"><circle cx="12" cy="12" r="10" /></svg>
+        </div>
       </div>
     </section>
   );

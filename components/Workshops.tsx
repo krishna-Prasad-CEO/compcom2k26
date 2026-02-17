@@ -2,7 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { WORKSHOPS } from '../constants.ts';
+import { WorkshopData } from '../types';
+import { WORKSHOPS } from '../constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,7 @@ const Oscilloscope: React.FC = () => {
     const bars = barsRef.current?.children;
     if (bars) {
       Array.from(bars).forEach((bar) => {
-        gsap.to(bar, {
+        gsap.to('bar', {
           height: `${Math.random() * 100}%`,
           duration: 0.2 + Math.random() * 0.3,
           repeat: -1,
@@ -40,7 +41,7 @@ const Oscilloscope: React.FC = () => {
         Monitor // Channel_A
       </div>
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#F97316_0.5px,transparent_0.5px)] bg-[size:10px_10px]" />
-      
+
       {/* Waveform */}
       <svg viewBox="0 0 240 50" preserveAspectRatio="none" className="absolute inset-0 w-full h-full opacity-40">
         <path
@@ -62,26 +63,29 @@ const Oscilloscope: React.FC = () => {
   );
 };
 
-const ResearchPanel: React.FC<{ workshop: any; index: number }> = ({ workshop, index }) => {
+const ResearchPanel: React.FC<{ workshop: WorkshopData; index: number }> = ({ workshop, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.from(panelRef.current, {
-      scrollTrigger: {
-        trigger: panelRef.current,
-        start: "top 85%",
-      },
-      x: window.innerWidth > 768 ? (index === 0 ? -50 : 50) : 0,
-      y: window.innerWidth <= 768 ? 30 : 0,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out"
+    const ctx = gsap.context(() => {
+      gsap.from(panelRef.current, {
+        scrollTrigger: {
+          trigger: panelRef.current,
+          start: "top 85%",
+        },
+        x: () => window.innerWidth > 768 ? (index === 0 ? -50 : 50) : 0,
+        y: () => window.innerWidth <= 768 ? 30 : 0,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
     });
+    return () => ctx.revert();
   }, [index]);
 
   return (
-    <div 
+    <div
       ref={panelRef}
       className={`relative group bg-slate-900/40 border border-white/10 transition-all duration-500 overflow-hidden ${isExpanded ? 'xl:col-span-2' : ''}`}
       style={{ clipPath: 'polygon(0 0, 95% 0, 100% 10%, 100% 100%, 5% 100%, 0 90%)' }}
@@ -91,14 +95,14 @@ const ResearchPanel: React.FC<{ workshop: any; index: number }> = ({ workshop, i
           {/* Visual Identity Block */}
           <div className="w-full lg:w-48 h-40 lg:h-48 bg-black/60 border border-white/5 rounded-lg relative overflow-hidden flex items-center justify-center shrink-0">
             <div className="absolute top-2 left-2 font-mono text-[7px] text-white/20">INSTRUMENT_ID: {workshop.id}</div>
-            
+
             {workshop.id === 'ws-1' ? (
               <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 border border-orange-500/40 rounded flex items-center justify-center">
-                   <div className="w-8 h-8 sm:w-10 sm:h-10 border border-orange-500 animate-pulse bg-orange-500/10" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border border-orange-500 animate-pulse bg-orange-500/10" />
                 </div>
                 <div className="mt-4 flex gap-2">
-                   {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-yellow-500 animate-bounce" style={{animationDelay: `${i*0.1}s`}} />)}
+                  {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 bg-yellow-500 animate-bounce" style={{ animationDelay: `${i * 0.1}s` }} />)}
                 </div>
               </div>
             ) : (
@@ -115,30 +119,30 @@ const ResearchPanel: React.FC<{ workshop: any; index: number }> = ({ workshop, i
           {/* Content Block */}
           <div className="flex-1 w-full">
             <p className="text-[9px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.4em] mb-2">
-              {workshop.id === 'ws-1' ? 'MODULE_LEAD' : 'RF_MODULE_LEAD'} // {workshop.coordinator}
+              {workshop.id === 'ws-1' ? 'MODULE_LEAD' : 'RF_MODULE_LEAD'} ~ {workshop.coordinator}
             </p>
             <h3 className="text-xl sm:text-4xl font-orbitron font-black text-white mb-6 leading-tight group-hover:text-yellow-400 transition-colors">
               {workshop.title}
             </h3>
-            
+
             <div className="flex flex-wrap gap-3 mb-8">
               <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[9px] text-white/60 uppercase">Array_Active</div>
               <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[9px] text-white/60 uppercase">V2.4</div>
             </div>
 
             <div className={`overflow-hidden transition-all duration-700 ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-white/10 mb-8">
-                 {workshop.points.map((pt: string, i: number) => (
-                   <div key={i} className="flex items-start gap-3 text-[11px] font-inter text-slate-400">
-                      <div className="w-1.5 h-[1px] bg-yellow-500 mt-2 shrink-0" />
-                      {pt}
-                   </div>
-                 ))}
-               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-white/10 mb-8">
+                {workshop.points.map((pt: string, i: number) => (
+                  <div key={i} className="flex items-start gap-3 text-[11px] font-inter text-slate-400">
+                    <div className="w-1.5 h-[1px] bg-yellow-500 mt-2 shrink-0" />
+                    {pt}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-6">
-              <button 
+              <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="group relative w-full sm:w-auto px-8 py-3.5 overflow-hidden border border-yellow-500/30 rounded-sm hover:border-yellow-500 transition-colors"
               >
@@ -156,7 +160,7 @@ const ResearchPanel: React.FC<{ workshop: any; index: number }> = ({ workshop, i
           </div>
         </div>
       </div>
-      
+
       {/* Technical corner accents */}
       <div className="absolute top-0 right-0 p-3 font-mono text-[8px] text-white/10 select-none">NODE_0{index + 1}</div>
       <div className="absolute bottom-4 left-4 w-8 h-1 bg-white/5" />
@@ -196,7 +200,7 @@ const Workshops: React.FC = () => {
               <p className="text-[8px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.5em] animate-pulse">Live_Research_Deck_Active</p>
             </div>
             <h2 className="text-4xl sm:text-7xl md:text-9xl font-orbitron font-black text-white leading-[0.9] tracking-tighter uppercase">
-              RESEARCH <br/><span className="text-yellow-500">MODULES</span>
+              RESEARCH <br /><span className="text-yellow-500">MODULES</span>
             </h2>
           </div>
           <div className="w-full md:w-1/3">
@@ -211,17 +215,17 @@ const Workshops: React.FC = () => {
         </div>
 
         <div className="mt-20 sm:mt-32 flex flex-wrap justify-between items-center gap-8 pt-10 border-t border-white/5 opacity-30">
-           <div className="flex gap-8 sm:gap-12 font-mono text-[8px] sm:text-[9px] text-white uppercase tracking-[0.2em] sm:tracking-[0.3em]">
-             <div className="flex items-center gap-3">
-               <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> SIM_OK
-             </div>
-             <div className="flex items-center gap-3">
-               <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" /> RELAY_SYNC
-             </div>
-           </div>
-           <div className="font-mono text-[8px] sm:text-[9px] text-slate-500">
-             LAB_REF: RDC-0492-X // LEVEL_PERMITTED
-           </div>
+          <div className="flex gap-8 sm:gap-12 font-mono text-[8px] sm:text-[9px] text-white uppercase tracking-[0.2em] sm:tracking-[0.3em]">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> SIM_OK
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" /> RELAY_SYNC
+            </div>
+          </div>
+          <div className="font-mono text-[8px] sm:text-[9px] text-slate-500">
+            LAB_REF: RDC-0492-X // LEVEL_PERMITTED
+          </div>
         </div>
       </div>
     </section>
