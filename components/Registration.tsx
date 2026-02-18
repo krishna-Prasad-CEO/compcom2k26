@@ -79,10 +79,20 @@ const FrequencyBand: React.FC<{ plan: PricePlan; index: number; isSelected: bool
       style={{ width: `${width}px` }}
     >
       {/* Label Tooltip */}
-      <div className={`absolute -top-16 left-1/2 -translate-x-1/2 w-40 sm:w-48 bg-slate-900 border border-yellow-500/50 p-2 sm:p-3 rounded-lg backdrop-blur-xl transition-all duration-500 pointer-events-none ${isSelected ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <p className="font-orbitron text-[8px] sm:text-[10px] text-yellow-500 uppercase tracking-widest">{plan.title}</p>
-        <p className="text-white font-bold text-base sm:text-lg">₹{plan.price}</p>
-        <p className="text-[7px] sm:text-[8px] text-slate-400 font-mono mt-1 leading-tight">{plan.features}</p>
+      <div className={`absolute -top-28 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-slate-900 border border-yellow-500/50 p-3 sm:p-4 rounded-lg backdrop-blur-xl transition-all duration-500 z-50 ${isSelected ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+        <p className="font-orbitron text-[8px] sm:text-[10px] text-yellow-500 uppercase tracking-widest mb-1">{plan.title}</p>
+        <p className="text-white font-bold text-base sm:text-lg mb-1">₹{plan.price}</p>
+        <p className="text-[7px] sm:text-[8px] text-slate-400 font-mono leading-tight mb-3">{plan.features}</p>
+
+        <a
+          href={plan.link}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="block w-full py-2 text-center text-[9px] font-orbitron font-bold tracking-widest uppercase border border-yellow-500/50 rounded bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500 hover:text-slate-900 transition-all hover:scale-105"
+        >
+          Initialize Access
+        </a>
       </div>
 
       {/* The Frequency Band Body */}
@@ -162,7 +172,7 @@ const Registration: React.FC = () => {
 
         {/* Spectrum Display - Scrollable on mobile */}
         <div className="overflow-x-auto pb-12 sm:pb-0 scrollbar-hide">
-          <div ref={spectrumRef} className="relative flex items-end justify-start sm:justify-center gap-4 sm:gap-6 min-w-max px-6 h-[350px] sm:h-[450px]">
+          <div ref={spectrumRef} className="relative flex items-end justify-start sm:justify-center gap-4 sm:gap-6 min-w-max px-6 pt-40 h-[500px] sm:h-[600px]">
             {PLANS.map((plan, idx) => (
               <div key={idx} className="freq-band">
                 <FrequencyBand
@@ -171,7 +181,6 @@ const Registration: React.FC = () => {
                   isSelected={selectedPlan === idx}
                   onSelect={() => {
                     setSelectedPlan(idx);
-                    if (plan.link) window.open(plan.link, '_blank');
                   }}
                 />
               </div>
