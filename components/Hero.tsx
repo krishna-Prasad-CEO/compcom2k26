@@ -6,9 +6,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Note: Replace these URLs with your actual local assets for best performance
 const AUDIO_URLS = {
-  AMBIENT: 'https://cdn.pixabay.com/audio/2022/02/10/audio_c3948e6530.mp3', // Space ambient
-  LAUNCH: 'https://cdn.pixabay.com/audio/2022/03/10/audio_7302484f93.mp3', // Rocket/Explosion sound
-  SIGNAL: 'https://cdn.pixabay.com/audio/2021/08/09/audio_82319c595d.mp3', // Sci-fi notification
+  AMBIENT: 'https://raw.githubusercontent.com/swostikpati/Interactive-Pyramids/main/FINAL/intense/music/space-ambient.mp3', // Space ambient
+  LAUNCH: 'https://raw.githubusercontent.com/scottydocs/star-wars-soundboard/master/audio/seismic-charge.mp3', // Deep explosion/space sound
+  SIGNAL: 'https://raw.githubusercontent.com/scottydocs/star-wars-soundboard/master/audio/blaster-firing.mp3', // Sci-fi notification
 };
 
 const Hero: React.FC = () => {
