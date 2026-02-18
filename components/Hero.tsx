@@ -255,7 +255,7 @@ const Hero: React.FC = () => {
       <div ref={shockwaveRef} className="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-48 h-48 border-2 border-orange-500/30 rounded-full opacity-0 pointer-events-none z-0 gpu-layer" />
 
       <div ref={textRef} className="relative z-20 text-center select-none px-4 gpu-layer max-w-[95vw]">
-        <h1 className="text-[13vw] sm:text-8xl md:text-[9rem] lg:text-[13rem] font-black font-orbitron tracking-tighter text-white leading-[0.8] will-change-transform whitespace-nowrap">
+        <h1 className="text-[13vw] sm:text-7xl md:text-[7rem] lg:text-[10rem] xl:text-[12rem] font-black font-orbitron tracking-tighter text-white leading-[0.8] will-change-transform whitespace-nowrap">
           {renderText("ECE 2K26")}
         </h1>
         <div className="mt-8 flex items-center justify-center gap-4 sm:gap-12">

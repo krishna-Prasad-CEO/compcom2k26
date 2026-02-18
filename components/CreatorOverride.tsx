@@ -86,25 +86,27 @@ const CreatorOverride: React.FC = () => {
 
             {stage >= 1 && (
               <p className="text-yellow-500 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
-                &gt; THIS INTERFACE WAS NOT DESIGNED.
+                &gt; FOUR YEARS AGO,
               </p>
             )}
 
             {stage >= 2 && (
               <p className="text-white/60 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
-                &gt; IT WAS CONTROLLED.
+                &gt;WE WALKED INTO GCE SALEM
+                AS STUDENTS.
               </p>
             )}
 
             {stage >= 3 && (
               <p className="text-white/50 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
-                &gt; ANIMATIONS WERE TIMED. SYSTEMS WERE CONNECTED.
+                &gt; TODAY,
               </p>
             )}
 
             {stage >= 4 && (
               <p className="text-white/40 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
-                &gt; EVERY SIGNAL WAS PLACED MANUALLY.
+                &gt; WE STAND HERE
+                AS ENGINEERS.
               </p>
             )}
 
@@ -114,24 +116,24 @@ const CreatorOverride: React.FC = () => {
                   <div className="flex items-center gap-3 sm:gap-4">
                     <span className="h-[1px] w-6 sm:w-10 bg-orange-500" />
                     <p className="text-orange-500 text-[8px] xs:text-[9px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.5em] font-black uppercase">
-                      CREATOR ACCESS: ENABLED
+                      IT IS A THANK YOU
+                      TO EVERY CLASSROOM, EVERY FRIEND,
+                      EVERY STRUGGLE.
                     </p>
                   </div>
                   <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-orbitron font-black text-white tracking-tighter uppercase inline-block border-r-[4px] sm:border-r-[8px] border-yellow-500 pr-2 sm:pr-6 animate-blink leading-none break-words max-w-full">
-                    KRISHNA PRASAD S
+                    BEYOND EARTH.
                   </h2>
                 </div>
               )}
 
               {stage >= 6 && (
                 <div className="mt-10 sm:mt-16 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-center">
-                  <a
-                    href="tel:9489401725"
-                    className="group relative px-5 py-3 border border-yellow-500/30 text-yellow-500 text-[8px] xs:text-[9px] sm:text-[11px] tracking-[0.2em] uppercase overflow-hidden hover:bg-yellow-500/10 transition-colors"
-                  >
-                    <div className="absolute top-0 left-0 w-full h-[1px] bg-yellow-500/50 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-                    [ +91 94894 01725 ]
-                  </a>
+
+                  <div className="absolute top-0 left-0 w-full h-[1px] bg-yellow-500/50 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+                  BECAUSE GCE TAUGHT US
+                  HOW TO RISE.
+
                   <p className="text-white/10 text-[6px] xs:text-[7px] sm:text-[9px] tracking-[0.5em] sm:tracking-[1em] uppercase animate-pulse">
                     &gt; SYSTEM RETURNING TO USER MODE
                   </p>
