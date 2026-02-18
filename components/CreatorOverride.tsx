@@ -92,7 +92,7 @@ const CreatorOverride: React.FC = () => {
 
             {stage >= 2 && (
               <p className="text-white/60 text-[9px] xs:text-[11px] sm:text-sm tracking-[0.1em] sm:tracking-[0.2em] leading-relaxed animate-[typing_0.5s_steps(40)] overflow-hidden whitespace-nowrap">
-                &gt;WE WALKED INTO GCE SALEM
+                &gt; WE WALKED INTO GCE SALEM
                 AS STUDENTS.
               </p>
             )}
