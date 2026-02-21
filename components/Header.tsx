@@ -12,10 +12,10 @@ const Header: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: 'Mission', href: '#events' },
-    { name: 'Research', href: '#workshops' },
-    { name: 'Capacity', href: '#register' },
-    { name: 'Uplink', href: '#contact' }
+    { name: 'Events', href: '#events' },
+    { name: 'Workshops', href: '#workshops' },
+    { name: 'Register', href: '#register' },
+    { name: 'Contact', href: '#contact' }
   ];
 
   const toggleMenu = () => {
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           >
             <img src="/logo.png" alt="ECE 2K26 Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
             <span className="text-xl font-orbitron font-black tracking-tighter text-white">
-              COMP <span className="text-orange-500">COM</span>
+              <span className="text-orange-500"></span>
             </span>
           </div>
 
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => { e.preventDefault(); handleLinkClick(item.href); }}
-                className="font-orbitron text-[10px] uppercase tracking-[0.3em] text-slate-400 hover:text-orange-500 transition-colors relative group"
+                className="font-orbitron text-[10px] uppercase tracking-tighter text-slate-400 hover:text-orange-500 transition-colors relative group"
               >
                 {item.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-orange-500 group-hover:w-full transition-all duration-300" />

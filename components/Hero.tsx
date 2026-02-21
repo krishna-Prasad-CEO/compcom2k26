@@ -256,11 +256,11 @@ const Hero: React.FC = () => {
 
       <div ref={textRef} className="relative z-20 text-center select-none px-4 gpu-layer max-w-[95vw] -translate-y-[5vh] sm:-translate-y-[8vh]">
         <h1 className="text-[13vw] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[9rem] 2xl:text-[11rem] font-black font-orbitron tracking-tighter text-white leading-[0.8] will-change-transform whitespace-nowrap">
-          {renderText("ECE 2K26")}
+          {renderText("COMP COM")}
         </h1>
         <div className="mt-8 flex items-center justify-center gap-4 sm:gap-12">
           <div className="h-[1px] w-12 sm:w-40 bg-orange-500/20" />
-          <p className="text-[10px] sm:text-xl md:text-2xl font-orbitron text-yellow-500/80 tracking-[0.8em] sm:tracking-[1.2em] uppercase font-bold">Beyond Earth</p>
+          <p className="text-[10px] sm:text-xl md:text-2xl font-orbitron text-yellow-500/80 tracking-[0.8em] sm:tracking-[1.2em] uppercase font-bold">ECE 2K26</p>
           <div className="h-[1px] w-12 sm:w-40 bg-orange-500/20" />
         </div>
         {countdown > 0 && (

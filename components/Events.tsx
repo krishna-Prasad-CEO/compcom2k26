@@ -238,7 +238,7 @@ const Events: React.FC = () => {
             <p className="text-[8px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.5em] animate-pulse">System_Core_Access_Granted</p>
           </div>
           <h2 className="section-title-part text-4xl sm:text-8xl md:text-[9rem] font-orbitron font-black text-white leading-[0.9] tracking-tighter uppercase mb-6 sm:mb-8">
-            MISSION <br /><span className="text-yellow-500">CONTROL</span>
+            EVENTS <br /><span className="text-yellow-500">CONTROL</span>
           </h2>
           <div className="section-title-part flex items-center gap-4 sm:gap-6">
             <div className="h-px w-16 sm:w-32 bg-gradient-to-r from-orange-500 to-transparent" />

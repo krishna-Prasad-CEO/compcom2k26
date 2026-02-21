@@ -79,7 +79,7 @@ const FrequencyBand: React.FC<{ plan: PricePlan; index: number; isSelected: bool
       style={{ width: `${width}px` }}
     >
       {/* Label Tooltip */}
-      <div className={`absolute -top-28 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-slate-900 border border-yellow-500/50 p-3 sm:p-4 rounded-lg backdrop-blur-xl transition-all duration-500 z-50 ${isSelected ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+      <div className={`absolute -top-36 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-slate-900 border border-yellow-500/50 p-3 sm:p-4 rounded-lg backdrop-blur-xl transition-all duration-500 z-50 ${isSelected ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
         <p className="font-orbitron text-[8px] sm:text-[10px] text-yellow-500 uppercase tracking-widest mb-1">{plan.title}</p>
         <p className="text-white font-bold text-base sm:text-lg mb-1">₹{plan.price}</p>
         <p className="text-[7px] sm:text-[8px] text-slate-400 font-mono leading-tight mb-3">{plan.features}</p>
@@ -103,10 +103,13 @@ const FrequencyBand: React.FC<{ plan: PricePlan; index: number; isSelected: bool
           <Waveform type={index % 3 === 0 ? 'square' : index % 3 === 1 ? 'rf' : 'sine'} active={isSelected} color={isSelected ? '#FBBF24' : '#F97316'} />
         </div>
 
-        {/* Locked Overlay */}
+        {/* Locked Overlay & Add Button */}
         {isSelected && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-full h-[1px] bg-yellow-500 shadow-[0_0_10px_#FBBF24] animate-pulse" />
+            <div className="absolute w-10 h-10 rounded-full border border-yellow-500 bg-yellow-500/20 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-yellow-500 text-xl font-bold">+</span>
+            </div>
           </div>
         )}
       </div>
@@ -170,9 +173,8 @@ const Registration: React.FC = () => {
           <p className="text-slate-500 font-mono text-[9px] sm:text-sm tracking-[0.4em] sm:tracking-[0.8em] uppercase">Allocate_Bandwidth_Capacity</p>
         </div>
 
-        {/* Spectrum Display - Scrollable on mobile */}
         <div className="overflow-x-auto pb-12 sm:pb-0 scrollbar-hide">
-          <div ref={spectrumRef} className="relative flex items-end justify-start sm:justify-center gap-4 sm:gap-6 min-w-max px-6 pt-40 h-[500px] sm:h-[600px]">
+          <div ref={spectrumRef} className="relative flex items-end justify-start sm:justify-center gap-4 sm:gap-6 min-w-max px-20 pt-48 h-[500px] sm:h-[600px]">
             {PLANS.map((plan, idx) => (
               <div key={idx} className="freq-band">
                 <FrequencyBand

@@ -200,7 +200,7 @@ const Workshops: React.FC = () => {
               <p className="text-[8px] sm:text-[10px] font-mono text-orange-500 uppercase tracking-[0.5em] animate-pulse">Live_Research_Deck_Active</p>
             </div>
             <h2 className="text-4xl sm:text-7xl md:text-9xl font-orbitron font-black text-white leading-[0.9] tracking-tighter uppercase">
-              RESEARCH <br /><span className="text-yellow-500">MODULES</span>
+              WORKSHOP <br /><span className="text-yellow-500">MODULES</span>
             </h2>
           </div>
           <div className="w-full md:w-1/3">

@@ -8,8 +8,7 @@ import Registration from './components/Registration.tsx';
 import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
 import BackgroundCanvas from './components/BackgroundCanvas.tsx';
-import GlitchOverlay from './components/GlitchOverlay.tsx';
-import CreatorOverride from './components/CreatorOverride.tsx';
+
 import IntroAnimation from './components/IntroAnimation.tsx';
 import {
   SatelliteBurstDivider,
@@ -39,7 +38,7 @@ const App: React.FC = () => {
 
       <div className={`transition-opacity duration-1000 ${isIntroActive ? 'opacity-0' : 'opacity-100'}`}>
         <BackgroundCanvas />
-        <GlitchOverlay />
+
         <Header />
 
         {/* HUD Data Streams */}
@@ -75,7 +74,7 @@ const App: React.FC = () => {
             <Contact />
 
             {/* Secret Creator Session Trigger: Placed specifically above Footer */}
-            <CreatorOverride />
+
           </div>
         </main>
 

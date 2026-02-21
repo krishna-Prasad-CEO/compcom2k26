@@ -13,10 +13,9 @@ const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16 relative z-10">
         <div className="col-span-1 lg:col-span-2">
-          <h3 className="text-5xl md:text-7xl font-orbitron font-black text-white mb-6">ECE <span className="text-orange-500">2K26</span></h3>
+          <h3 className="text-5xl md:text-7xl font-orbitron flex items-center gap-2 justify-center font-black text-white mb-6">ECE <span className="text-orange-500">2K26</span></h3>
           <p className="text-slate-500 font-mono text-sm leading-relaxed max-w-xl">
-            Established in the year 2026, the Mission Beyond Earth symposium serves as a nexus for planetary communication and interstellar electronics development.
-            All signals transmitted are subject to department encryption standards.
+
           </p>
         </div>
 
