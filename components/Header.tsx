@@ -1,5 +1,67 @@
+import React, { useState, useEffect, useMemo } from 'react';
 
-import React, { useState, useEffect } from 'react';
+const MissionCountdown: React.FC = () => {
+  const targetDate = useMemo(() => new Date('2026-03-11T00:00:00+05:30').getTime(), []);
+  const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number }>({ d: 0, h: 0, m: 0, s: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
+      } else {
+        setTimeLeft({
+          d: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          h: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          m: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          s: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  const pad = (num: number) => num.toString().padStart(2, '0');
+
+  return (
+    <div className="flex flex-col items-center sm:items-end group translate-y-1 sm:translate-y-0">
+      <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-1.5 px-3">
+        <div className="w-1 h-1 bg-orange-500 rounded-full animate-pulse shadow-[0_0_5px_#F97316]" />
+        <span className="font-orbitron text-[6px] sm:text-[7px] font-bold text-orange-500 uppercase tracking-[0.3em] opacity-90">DEPT_MISSION_CLOCK</span>
+      </div>
+      <div className="relative px-4 sm:px-6 py-1.5 sm:py-2 bg-black/60 border border-orange-500/20 rounded-full backdrop-blur-md overflow-hidden flex items-center gap-3 sm:gap-5 group-hover:border-orange-500/40 transition-all duration-500 shadow-[0_0_20px_rgba(249,115,22,0.1)]">
+        {/* Scanning Line Animation */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
+          <div className="w-full h-[1px] bg-orange-500/30 absolute top-[-100%] animate-scan-line" />
+        </div>
+
+        <div className="flex flex-col items-center">
+          <span className="font-mono text-xs sm:text-lg font-bold text-white tracking-widest leading-none countdown-glitch" data-text={pad(timeLeft.d)}>{pad(timeLeft.d)}</span>
+          <span className="font-orbitron text-[5px] sm:text-[6px] text-orange-500/80 font-black tracking-widest mt-1">DAYS</span>
+        </div>
+        <span className="text-orange-500/40 font-mono text-sm sm:text-lg animate-pulse">:</span>
+        <div className="flex flex-col items-center">
+          <span className="font-mono text-xs sm:text-lg font-bold text-white tracking-widest leading-none countdown-glitch" data-text={pad(timeLeft.h)}>{pad(timeLeft.h)}</span>
+          <span className="font-orbitron text-[5px] sm:text-[6px] text-orange-500/80 font-black tracking-widest mt-1">HRS</span>
+        </div>
+        <span className="text-orange-500/40 font-mono text-sm sm:text-lg animate-pulse">:</span>
+        <div className="flex flex-col items-center">
+          <span className="font-mono text-xs sm:text-lg font-bold text-white tracking-widest leading-none countdown-glitch" data-text={pad(timeLeft.m)}>{pad(timeLeft.m)}</span>
+          <span className="font-orbitron text-[5px] sm:text-[6px] text-orange-500/80 font-black tracking-widest mt-1">MINS</span>
+        </div>
+        <span className="text-orange-500/40 font-mono text-sm sm:text-lg animate-pulse">:</span>
+        <div className="flex flex-col items-center">
+          <span className="font-mono text-xs sm:text-lg font-bold text-orange-500 tracking-widest leading-none countdown-glitch" data-text={pad(timeLeft.s)}>{pad(timeLeft.s)}</span>
+          <span className="font-orbitron text-[5px] sm:text-[6px] text-orange-500/80 font-black tracking-widest mt-1">SECS</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,6 +110,10 @@ const Header: React.FC = () => {
             <span className="text-xl font-orbitron font-black tracking-tighter text-white">
               <span className="text-orange-500"></span>
             </span>
+          </div>
+
+          <div className="flex flex-1 justify-center px-2 sm:px-8 scale-[0.6] sm:scale-75 lg:scale-100 min-w-0">
+            <MissionCountdown />
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -105,6 +171,10 @@ const Header: React.FC = () => {
           </a>
         ))}
 
+        <div className="mt-8 scale-125">
+          <MissionCountdown />
+        </div>
+
         <button
           onClick={() => handleLinkClick('#register')}
           className="mt-12 px-12 py-4 border border-orange-500 text-orange-500 font-orbitron text-sm uppercase tracking-widest hover:bg-orange-500 hover:text-white transition-all"
@@ -122,6 +192,38 @@ const Header: React.FC = () => {
         }
         .animate-current-flow {
           animation: current-flow 2s linear infinite;
+        }
+
+        @keyframes scan-line {
+          0% { top: -100%; }
+          100% { top: 100%; }
+        }
+        .animate-scan-line {
+          animation: scan-line 4s linear infinite;
+        }
+
+        .countdown-glitch {
+          position: relative;
+        }
+        .countdown-glitch::after {
+          content: attr(data-text);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          opacity: 0;
+        }
+        .group:hover .countdown-glitch::after {
+          opacity: 0.5;
+          animation: countdown-glitch-anim 0.3s steps(2) infinite;
+          text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
+        }
+        @keyframes countdown-glitch-anim {
+          0% { transform: translate(0); }
+          50% { transform: translate(-1px, 1px); }
+          100% { transform: translate(1px, -1px); }
         }
       `}</style>
     </>

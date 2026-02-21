@@ -11,6 +11,17 @@ const AUDIO_URLS = {
   SIGNAL: 'https://raw.githubusercontent.com/scottydocs/star-wars-soundboard/master/audio/blaster-firing.mp3', // Sci-fi notification
 };
 
+const RocketVisual: React.FC<{ className?: string }> = ({ className = "" }) => (
+  <div className={`w-full h-full flex flex-col items-center gpu-layer ${className}`}>
+    <div className="w-0 h-0 border-l-[32px] sm:border-l-[48px] border-l-transparent border-r-[32px] sm:border-r-[48px] border-r-transparent border-b-[45px] sm:border-b-[100px] border-b-white" />
+    <div className="w-16 sm:w-24 h-40 sm:h-64 bg-white relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-50 to-transparent" />
+    </div>
+    <div className="absolute bottom-0 -left-8 sm:-left-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-bl-[4rem] border-l border-white/20" />
+    <div className="absolute bottom-0 -right-8 sm:-right-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-br-[4rem] border-r border-white/20" />
+  </div>
+);
+
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const rocketContainerRef = useRef<HTMLDivElement>(null);
@@ -212,7 +223,11 @@ const Hero: React.FC = () => {
 
   const renderText = (text: string) => {
     return text.split('').map((char, i) => (
-      <span key={i} className="hero-char inline-block gpu-layer">
+      <span
+        key={i}
+        className="hero-char inline-block gpu-layer relative glitch-text-effect"
+        data-text={char === ' ' ? '\u00A0' : char}
+      >
         {char === ' ' ? '\u00A0' : char}
       </span>
     ));
@@ -299,13 +314,16 @@ const Hero: React.FC = () => {
         </div>
 
         <div ref={rocketContainerRef} className="absolute bottom-0 w-16 sm:w-24 h-52 sm:h-80 flex flex-col items-center gpu-layer crisp-asset origin-bottom">
-          <div ref={rocketInnerRef} className="w-full h-full flex flex-col items-center gpu-layer will-change-transform">
-            <div className="w-0 h-0 border-l-[32px] sm:border-l-[48px] border-l-transparent border-r-[32px] sm:border-r-[48px] border-r-transparent border-b-[45px] sm:border-b-[100px] border-b-white" />
-            <div className="w-16 sm:w-24 h-40 sm:h-64 bg-white relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-50 to-transparent" />
+          <div ref={rocketInnerRef} className="w-full h-full relative gpu-layer will-change-transform glitch-rocket-container">
+            <RocketVisual className="relative z-10" />
+
+            <div className="absolute inset-0 pointer-events-none glitch-element-red">
+              <RocketVisual className="opacity-40" />
             </div>
-            <div className="absolute bottom-0 -left-8 sm:-left-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-bl-[4rem] border-l border-white/20" />
-            <div className="absolute bottom-0 -right-8 sm:-right-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-br-[4rem] border-r border-white/20" />
+
+            <div className="absolute inset-0 pointer-events-none glitch-element-cyan">
+              <RocketVisual className="opacity-40" />
+            </div>
           </div>
           <div
             ref={flameRef}
@@ -317,5 +335,128 @@ const Hero: React.FC = () => {
     </section>
   );
 };
+
+const styles = `
+  .glitch-text-effect {
+    position: relative;
+  }
+  
+  .glitch-text-effect::before,
+  .glitch-text-effect::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    clip-path: inset(45% 0 45% 0);
+  }
+
+  .glitch-text-effect::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c1;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+  }
+
+  .glitch-text-effect::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-anim-1 {
+    0% { clip-path: inset(10% 0 85% 0); }
+    5% { clip-path: inset(40% 0 43% 0); }
+    10% { clip-path: inset(80% 0 13% 0); }
+    15% { clip-path: inset(20% 0 75% 0); }
+    20% { clip-path: inset(50% 0 10% 0); }
+    25% { clip-path: inset(10% 0 81% 0); }
+    30% { clip-path: inset(90% 0 5% 0); }
+    35% { clip-path: inset(30% 0 65% 0); }
+    40% { clip-path: inset(60% 0 20% 0); }
+    45% { clip-path: inset(15% 0 70% 0); }
+    50% { clip-path: inset(70% 0 15% 0); }
+    55% { clip-path: inset(5% 0 90% 0); }
+    60% { clip-path: inset(40% 0 45% 0); }
+    65% { clip-path: inset(85% 0 10% 0); }
+    70% { clip-path: inset(25% 0 60% 0); }
+    75% { clip-path: inset(55% 0 15% 0); }
+    80% { clip-path: inset(10% 0 85% 0); }
+    85% { clip-path: inset(90% 0 2% 0); }
+    90% { clip-path: inset(40% 0 50% 0); }
+    95% { clip-path: inset(15% 0 75% 0); }
+    100% { clip-path: inset(80% 0 10% 0); }
+  }
+
+  @keyframes glitch-anim-2 {
+    0% { clip-path: inset(80% 0 10% 0); }
+    5% { clip-path: inset(15% 0 75% 0); }
+    10% { clip-path: inset(40% 0 50% 0); }
+    15% { clip-path: inset(90% 0 2% 0); }
+    20% { clip-path: inset(55% 0 15% 0); }
+    25% { clip-path: inset(25% 0 60% 0); }
+    30% { clip-path: inset(85% 0 10% 0); }
+    35% { clip-path: inset(40% 0 45% 0); }
+    40% { clip-path: inset(5% 0 90% 0); }
+    45% { clip-path: inset(70% 0 15% 0); }
+    50% { clip-path: inset(15% 0 70% 0); }
+    55% { clip-path: inset(60% 0 20% 0); }
+    60% { clip-path: inset(30% 0 65% 0); }
+    65% { clip-path: inset(90% 0 5% 0); }
+    70% { clip-path: inset(10% 0 81% 0); }
+    75% { clip-path: inset(50% 0 10% 0); }
+    80% { clip-path: inset(20% 0 75% 0); }
+    85% { clip-path: inset(80% 0 13% 0); }
+    90% { clip-path: inset(40% 0 43% 0); }
+    95% { clip-path: inset(10% 0 85% 0); }
+    100% { clip-path: inset(50% 0 50% 0); }
+  }
+
+  .glitch-text-effect {
+    animation: glitch-skew 1s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    /* Rare intense skews */
+    20% { transform: skew(0deg); }
+    21% { transform: skew(-5deg); }
+    22% { transform: skew(3deg); }
+    23% { transform: skew(0deg); }
+    100% { transform: skew(0deg); }
+  }
+
+  .glitch-element-red {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(-2px 0 #ff00c1) brightness(1.2);
+    animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+  }
+
+  .glitch-element-cyan {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(2px 0 #00fff9) brightness(1.2);
+    animation: glitch-anim-2 3.5s infinite linear alternate-reverse;
+  }
+
+  .glitch-rocket-container {
+    animation: glitch-skew 1.5s infinite linear alternate-reverse;
+  }
+`;
+
+// Inject styles directly for the component
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
+}
 
 export default Hero;
