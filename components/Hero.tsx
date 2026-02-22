@@ -12,13 +12,57 @@ const AUDIO_URLS = {
 };
 
 const RocketVisual: React.FC<{ className?: string }> = ({ className = "" }) => (
-  <div className={`w-full h-full flex flex-col items-center gpu-layer ${className}`}>
-    <div className="w-0 h-0 border-l-[32px] sm:border-l-[48px] border-l-transparent border-r-[32px] sm:border-r-[48px] border-r-transparent border-b-[45px] sm:border-b-[100px] border-b-white" />
-    <div className="w-16 sm:w-24 h-40 sm:h-64 bg-white relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-50 to-transparent" />
+  <div className={`w-full h-full flex flex-col items-center justify-end pb-4 gpu-layer ${className}`}>
+    {/* Main Rocket Body */}
+    <div className="relative flex flex-col items-center">
+      {/* Nose Cone */}
+      <div className="w-10 sm:w-16 h-12 sm:h-20 bg-gradient-to-b from-slate-100 to-slate-300 rounded-t-full shadow-inner" />
+
+      {/* Upper Stage */}
+      <div className="w-10 sm:w-16 h-16 sm:h-24 bg-gradient-to-r from-slate-200 via-white to-slate-200 border-x border-black/5 relative">
+        <div className="absolute top-4 left-0 w-full h-[1px] bg-black/10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-slate-400/20 border border-black/5" />
+      </div>
+
+      {/* Interstage Ring */}
+      <div className="w-[110%] h-2 sm:h-3 bg-slate-400 rounded-sm shadow-md z-10" />
+
+      {/* Main Stage */}
+      <div className="w-10 sm:w-16 h-32 sm:h-48 bg-gradient-to-r from-slate-200 via-white to-slate-200 border-x border-black/5 relative flex flex-col items-center justify-center">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:100%_20px]" />
+
+        {/* Mission Logo */}
+        <div className="relative group-hover:scale-125 transition-transform duration-500 z-10">
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-6 sm:w-12 h-6 sm:h-12 object-contain drop-shadow-[0_0_12px_rgba(249,115,22,0.6)] opacity-100"
+          />
+        </div>
+      </div>
+
+      {/* Engine Section */}
+      <div className="w-12 sm:w-20 h-6 sm:h-10 bg-slate-800 rounded-b-lg border-t-2 border-slate-600 flex justify-center items-end pb-1 gap-1">
+        <div className="w-3 sm:w-5 h-4 sm:h-6 bg-slate-900 rounded-t-sm" />
+      </div>
+
+      {/* Side Boosters */}
+      <div className="absolute bottom-0 -left-6 sm:-left-10 flex flex-col items-center">
+        <div className="w-5 sm:w-8 h-8 sm:h-12 bg-gradient-to-b from-slate-100 to-slate-200 rounded-t-full" />
+        <div className="w-5 sm:w-8 h-24 sm:h-40 bg-gradient-to-r from-slate-200 via-white to-slate-200 border-x border-black/5" />
+        <div className="w-6 sm:w-10 h-4 sm:h-6 bg-slate-800 rounded-b-lg border-t border-slate-600 flex justify-center items-end pb-1">
+          <div className="w-2 sm:w-3 h-2 sm:h-4 bg-slate-900 rounded-t-sm" />
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 -right-6 sm:-right-10 flex flex-col items-center">
+        <div className="w-5 sm:w-8 h-8 sm:h-12 bg-gradient-to-b from-slate-100 to-slate-200 rounded-t-full" />
+        <div className="w-5 sm:w-8 h-24 sm:h-40 bg-gradient-to-r from-slate-200 via-white to-slate-200 border-x border-black/5" />
+        <div className="w-6 sm:w-10 h-4 sm:h-6 bg-slate-800 rounded-b-lg border-t border-slate-600 flex justify-center items-end pb-1">
+          <div className="w-2 sm:w-3 h-2 sm:h-4 bg-slate-900 rounded-t-sm" />
+        </div>
+      </div>
     </div>
-    <div className="absolute bottom-0 -left-8 sm:-left-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-bl-[4rem] border-l border-white/20" />
-    <div className="absolute bottom-0 -right-8 sm:-right-12 w-8 sm:w-12 h-32 sm:h-48 bg-slate-100 rounded-br-[4rem] border-r border-white/20" />
   </div>
 );
 
@@ -171,14 +215,20 @@ const Hero: React.FC = () => {
           launchAudioRef.current?.play().catch(() => { });
         }
       }, 0)
-        .to(flameRef.current, { scaleY: 2.5, opacity: 1, duration: 0.4, ease: "none" }, 0)
+        .to(flameRef.current, { opacity: 1, duration: 0.4, ease: "none" }, 0)
+        .to(".smoke-layer-shadow", { opacity: 0.6, scale: 2.2, x: "random(-40, 40)", y: -30, rotation: "random(-15, 15)", stagger: 0.03, duration: 1.5, ease: "power2.out" }, 0)
+        .to(".smoke-layer-highlight", { opacity: 0.4, scale: 1.8, x: "random(-20, 20)", y: -15, stagger: 0.05, duration: 1.2, ease: "power2.out" }, 0.1)
+        .to(".smoke-fire-glow", { opacity: 0.8, scale: 2.5, duration: 0.8, ease: "expo.out" }, 0)
         .to(textRef.current, { opacity: 0, y: "-40px", duration: 1.2 }, 0.1)
         .fromTo(shockwaveRef.current, { scale: 0.2, opacity: 1 }, { scale: 8, opacity: 0, duration: 1, ease: "expo.out" }, 0.2);
 
       // Step 2: High Velocity Launch
       tl.to(rocketContainerRef.current, { y: "-140vh", scale: 0.5, duration: 6, ease: "power3.in" }, 0.5)
-        .to(flameRef.current, { scaleY: 20, scaleX: 1.8, opacity: 0.4, duration: 4, ease: "power2.in" }, 0.5)
-        .to(downlinkRef.current, { opacity: 1, scaleX: 3, scaleY: 220, duration: 3, ease: "power2.inOut" }, 1.5);
+        .to(flameRef.current, { scaleY: 2, scaleX: 1.2, opacity: 1, duration: 4, ease: "power2.in" }, 0.5)
+        .to([".smoke-layer-shadow", ".smoke-layer-highlight", ".smoke-fire-glow"], { opacity: 0, scaleY: 4, scaleX: 3, y: 150, duration: 3, ease: "power2.in", stagger: 0.02 }, 1)
+        .to(downlinkRef.current, { opacity: 1, scaleX: 3, scaleY: 220, duration: 3, ease: "power2.inOut" }, 1.5)
+        .to(".glitch-element-red", { x: "random(-10, 10)", opacity: 0.4, duration: 0.1, repeat: 20, yoyo: true }, 3)
+        .to(".glitch-element-cyan", { x: "random(-10, 10)", opacity: 0.4, duration: 0.1, repeat: 20, yoyo: true, delay: 0.05 }, 3);
 
       // Step 3: Transition Out
       tl.to(rocketContainerRef.current, { opacity: 0, scale: 0.3, duration: 1.5, ease: "none" }, 4.8)
@@ -269,6 +319,38 @@ const Hero: React.FC = () => {
 
       <div ref={shockwaveRef} className="absolute bottom-[20px] left-1/2 -translate-x-1/2 w-48 h-48 border-2 border-orange-500/30 rounded-full opacity-0 pointer-events-none z-0 gpu-layer" />
 
+      {/* Realistic Billowing Smoke Clouds */}
+      <div className="absolute bottom-[2vh] left-1/2 -translate-x-1/2 w-full flex justify-center pointer-events-none z-20">
+        {/* Core Glow from Engines */}
+        <div className="smoke-fire-glow absolute bottom-0 w-[300px] h-[150px] bg-orange-600/40 blur-[80px] rounded-full opacity-0 scale-50" />
+
+        {/* Shadow/Base Layer (Darker, thicker) */}
+        {[...Array(14)].map((_, i) => (
+          <div
+            key={`smoke-sh-${i}`}
+            className="smoke-layer-shadow absolute bottom-0 rounded-full bg-slate-400/30 blur-3xl opacity-0"
+            style={{
+              width: `${Math.random() * 120 + 180}px`,
+              height: `${Math.random() * 100 + 140}px`,
+              left: `${(i - 7) * 45}px`,
+            }}
+          />
+        ))}
+
+        {/* Highlight Layer (Brighter, thinner) */}
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={`smoke-hi-${i}`}
+            className="smoke-layer-highlight absolute bottom-2 rounded-full bg-slate-50/40 blur-2xl opacity-0"
+            style={{
+              width: `${Math.random() * 80 + 120}px`,
+              height: `${Math.random() * 60 + 100}px`,
+              left: `${(i - 5) * 60}px`,
+            }}
+          />
+        ))}
+      </div>
+
       <div ref={textRef} className="relative z-20 text-center select-none px-4 gpu-layer max-w-[95vw] -translate-y-[5vh] sm:-translate-y-[8vh]">
         <h1 className="text-[13vw] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] xl:text-[9rem] 2xl:text-[11rem] font-black font-orbitron tracking-tighter text-white leading-[0.8] will-change-transform whitespace-nowrap">
           {renderText("COMP COM")}
@@ -313,23 +395,49 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div ref={rocketContainerRef} className="absolute bottom-0 w-16 sm:w-24 h-52 sm:h-80 flex flex-col items-center gpu-layer crisp-asset origin-bottom">
-          <div ref={rocketInnerRef} className="w-full h-full relative gpu-layer will-change-transform glitch-rocket-container">
-            <RocketVisual className="relative z-10" />
-
-            <div className="absolute inset-0 pointer-events-none glitch-element-red">
-              <RocketVisual className="opacity-40" />
-            </div>
-
-            <div className="absolute inset-0 pointer-events-none glitch-element-cyan">
-              <RocketVisual className="opacity-40" />
-            </div>
+        <div ref={rocketContainerRef} className="absolute bottom-0 w-32 sm:w-48 h-64 sm:h-96 flex flex-col items-center justify-end gpu-layer crisp-asset origin-bottom">
+          {/* Glitch Ghosting Layers */}
+          <div className="absolute inset-0 opacity-0 pointer-events-none glitch-element-red">
+            <RocketVisual />
           </div>
+          <div className="absolute inset-0 opacity-0 pointer-events-none glitch-element-cyan">
+            <RocketVisual />
+          </div>
+
+          <div ref={rocketInnerRef} className="w-full h-full relative gpu-layer will-change-transform flex flex-col items-center justify-end">
+            <RocketVisual className="relative z-10" />
+          </div>
+
+          {/* Enhanced Engines/Flames */}
           <div
             ref={flameRef}
-            className="absolute bottom-[-20px] w-12 sm:w-16 h-40 bg-gradient-to-t from-transparent via-orange-600 to-yellow-200 rounded-full opacity-0 origin-top gpu-layer"
-            style={{ boxShadow: '0 0 30px rgba(249,115,22,0.6)' }}
-          />
+            className="absolute -bottom-4 left-0 w-full flex justify-center gap-6 sm:gap-10 opacity-0 origin-top gpu-layer pointer-events-none"
+          >
+            {/* Main Engine Flame */}
+            <div className="relative flex flex-col items-center">
+              <div
+                className="w-6 sm:w-10 h-40 sm:h-64 bg-gradient-to-t from-transparent via-orange-600 to-white rounded-full blur-sm"
+                style={{ boxShadow: '0 0 40px rgba(249,115,22,0.8), 0 0 80px rgba(249,115,22,0.4)' }}
+              />
+              <div className="absolute top-0 w-3 sm:w-5 h-20 sm:h-32 bg-white rounded-full blur-[2px] animate-pulse" />
+            </div>
+
+            {/* Booster Flames */}
+            <div className="absolute -left-1 sm:-left-2 flex flex-col items-center">
+              <div
+                className="w-4 sm:w-7 h-32 sm:h-52 bg-gradient-to-t from-transparent via-orange-500 to-white rounded-full blur-sm"
+                style={{ boxShadow: '0 0 30px rgba(249,115,22,0.6)' }}
+              />
+              <div className="absolute top-0 w-2 sm:w-4 h-16 sm:h-28 bg-white rounded-full blur-[2px] animate-pulse" />
+            </div>
+            <div className="absolute -right-1 sm:-right-2 flex flex-col items-center">
+              <div
+                className="w-4 sm:w-7 h-32 sm:h-52 bg-gradient-to-t from-transparent via-orange-500 to-white rounded-full blur-sm"
+                style={{ boxShadow: '0 0 30px rgba(249,115,22,0.6)' }}
+              />
+              <div className="absolute top-0 w-2 sm:w-4 h-16 sm:h-28 bg-white rounded-full blur-[2px] animate-pulse" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
