@@ -1,56 +1,270 @@
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useSpring, useTransform, useMotionValue, AnimatePresence } from 'framer-motion';
+import { Terminal, ArrowRight, Sparkles, Instagram, Globe } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const Footer: React.FC = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+interface FooterProps {
+  onShowReveal?: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onShowReveal }) => {
+  const footerRef = useRef<HTMLDivElement>(null);
+  const gatewayRef = useRef<HTMLDivElement>(null);
+  const voidRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Magnetic Button Logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { stiffness: 150, damping: 20 };
+  const magneticX = useSpring(useTransform(mouseX, [-150, 150], [-40, 40]), springConfig);
+  const magneticY = useSpring(useTransform(mouseY, [-150, 150], [-40, 40]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+    setIsHovered(false);
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Fade out Main Content as we enter Footer
+      gsap.to("main", {
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 80%",
+          end: "top 20%",
+          scrub: true,
+        },
+        opacity: 0.1,
+        filter: "blur(20px)",
+        scale: 0.98,
+      });
+
+      // 2. Transiton between Gateway and Void (More gradual)
+      gsap.to(gatewayRef.current, {
+        scrollTrigger: {
+          trigger: voidRef.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: 1.5,
+        },
+        opacity: 0,
+        y: -150,
+        scale: 0.8,
+        filter: "blur(20px)"
+      });
+
+      // 3. Word-by-word reveal for The Void
+      const words = textRef.current?.querySelectorAll(".footer-word");
+      if (words) {
+        gsap.from(words, {
+          scrollTrigger: {
+            trigger: voidRef.current,
+            start: "top 70%",
+            end: "top 30%",
+            scrub: 1,
+          },
+          opacity: 0,
+          y: 60,
+          filter: "blur(20px)",
+          stagger: 0.1,
+          ease: "power3.out"
+        });
+      }
+
+      // 4. Particles drift
+      gsap.to(".footer-particle", {
+        y: "-=150",
+        opacity: 0.4,
+        duration: "random(15, 25)",
+        repeat: -1,
+        stagger: {
+          amount: 8,
+          from: "random"
+        }
+      });
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const footerWords = "You’ve reached the edge of the experience.".split(" ");
+
   return (
-    <footer className="relative pt-32 pb-12 px-6 overflow-hidden bg-slate-950">
-      {/* Data stream footer border */}
-      <div className="absolute top-0 left-0 w-full flex gap-1 opacity-20">
-        {Array.from({ length: 100 }).map((_, i) => (
-          <div key={i} className={`h-1 w-1 rounded-full bg-orange-500 animate-pulse`} style={{ animationDelay: `${i * 50}ms` }} />
-        ))}
-      </div>
+    <footer
+      ref={footerRef}
+      className="relative bg-black overflow-hidden z-20"
+    >
+      {/* SECTION 1: DEPARTMENT GATEWAY */}
+      <section
+        ref={gatewayRef}
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-24 border-b border-white/5"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.02)_0%,transparent_70%)]" />
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16 relative z-10">
-        <div className="col-span-1 lg:col-span-2">
-          <h3 className="text-5xl md:text-7xl font-orbitron flex items-center gap-2 justify-center font-black text-white mb-6">ECE <span className="text-orange-500">2K26</span></h3>
-          <p className="text-slate-500 font-mono text-sm leading-relaxed max-w-xl">
+        <div className="relative z-10 w-full max-w-7xl flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="mb-16"
+          >
+            <h2 className="text-6xl md:text-9xl font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 tracking-tighter">
+              COMPCOM 2K26
+            </h2>
+            <div className="mt-4 text-orange-500 font-mono tracking-[1em] uppercase text-[10px] md:text-xs">
+              Beyond Earth Horizon
+            </div>
+          </motion.div>
 
-          </p>
-        </div>
-
-        <div className="col-span-1 flex flex-col items-center justify-between h-full">
-          <a
+          {/* Social Uplink */}
+          <motion.a
             href="https://www.instagram.com/compcom_26?igsh=cmEzOWUzM2NvbXg5"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-orange-600 to-yellow-500 group-hover:from-orange-600 group-hover:to-yellow-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative inline-flex items-center gap-6 px-12 py-6 bg-transparent border border-orange-500/20 rounded-2xl overflow-hidden transition-all hover:border-orange-500/40"
           >
-            <span className="relative px-6 py-3 transition-all ease-in duration-75 bg-slate-900 rounded-md group-hover:bg-opacity-0 font-orbitron tracking-wider flex items-center gap-3 text-white">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465 1.067-.047 1.409-.06 3.809-.06h.63zm1.506 5.37H8.179v5.065h1.226v-3.837h2.91v3.837h1.226V7.37zm1.226 5.065h2.91v-1.227h-1.684v-.578h1.684v-1.229h-2.91v3.029h-.005.005zm-4.136 3.029H8.179v1.226h2.732v-1.226zm4.136 0h-2.91v1.229h1.684v.576h-1.684v1.224h2.91v-3.029zM12 7c-2.761 0-5 2.239-5 5s2.239 5 5 5 5-2.239 5-5-2.239-5-5-5zm0 2c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-7C6.477 0 2 4.477 2 10s4.477 10 10 10 10-4.477 10-10S17.523 0 12 0z" clipRule="evenodd" />
-              </svg>
-              JOIN THE INSTA UPLINK
-            </span>
-          </a>
+            <div className="absolute inset-0 bg-orange-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+            <Instagram className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-transform" />
+            <div className="flex flex-col items-start">
 
-          <div className="mt-4 flex flex-col items-end gap-1 opacity-60">
+              <span className="text-xl md:text-2xl font-orbitron font-bold text-white tracking-widest uppercase">Join the Insta Uplink</span>
+            </div>
+          </motion.a>
 
-
-            <div className="w-32 h-[2px] bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-orange-500 w-[98%] animate-pulse shadow-[0_0_10px_#F97316]" />
+          <div className="mt-24 w-full flex flex-col md:flex-row items-center justify-between gap-12 pt-12 border-t border-white/5 opacity-40">
+            <div className="flex flex-col items-start gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest">Department Of ECE</span>
+              <span className="text-[8px] font-mono uppercase tracking-[0.5em] text-slate-500">Autonomous Mission Control</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="w-8 h-1 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-orange-500/40"
+                      animate={{ x: ['-100%', '100%'] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-32 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-        <p className="text-slate-500 text-[9px] font-mono tracking-[0.5em] uppercase">
-          © 2026 DEPARTMENT OF ECE | POWERED BY SIGNALS & IMAGINATION
-        </p>
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[9px] font-mono text-slate-500">ALL SYSTEMS NOMINAL</span>
+      {/* SECTION 2: THE VOID (CINEMATIC) */}
+      <section
+        ref={voidRef}
+        className="relative min-h-screen flex flex-col items-center justify-center snap-start"
+      >
+        {/* Cinematic Particles Backdrop (Global for Void) */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-[#0a0f2c]" />
+          {/* Floating Particles */}
+          {Array.from({ length: 40 }).map((_, i) => (
+            <div
+              key={i}
+              className="footer-particle absolute w-[1px] h-[1px] bg-orange-400/40 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                scale: Math.random() * 2 + 1
+              }}
+            />
+          ))}
+          {/* Cinematic Glows */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500/5 blur-[150px] rounded-full" />
+        </div>
+
+        <div className="relative z-10 text-center px-6 max-w-5xl flex flex-col items-center">
+          {/* Main Message */}
+          <div ref={textRef} className="mb-20">
+            <h3 className="text-4xl md:text-8xl font-orbitron font-black text-white leading-tight mb-8">
+              {footerWords.map((word, i) => (
+                <span key={i} className="footer-word inline-block mr-4 last:mr-0">
+                  {word}
+                </span>
+              ))}
+            </h3>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 2 }}
+              className="text-lg md:text-2xl font-mono text-slate-500 tracking-tighter uppercase"
+            >
+              But every system has an <span className="text-orange-500 font-bold">architect.</span>
+            </motion.p>
+          </div>
+
+          {/* Magnetic CTA Button */}
+          <motion.button
+            style={{ x: magneticX, y: magneticY }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => setIsHovered(true)}
+            onClick={(e) => {
+              e.preventDefault();
+              gsap.to(".void-particle", { scale: 5, opacity: 0, duration: 0.5 });
+              setTimeout(() => onShowReveal?.(), 400);
+            }}
+            className="group relative px-16 py-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl transition-all duration-500 hover:border-orange-500/40"
+          >
+            <div className="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 blur-3xl transition-all duration-700 rounded-full" />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isHovered ? 'hovered' : 'idle'}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex items-center justify-start space-4 relative z-10"
+              >
+                <Terminal className={`w-6 h-6 transition-colors ${isHovered ? 'text-orange-500' : 'text-white/40'}`} />
+                <span className="text-sm md:text-2xl font-orbitron font-bold tracking-tighter text-white uppercase">
+                  Eager to know who built this?
+                </span>
+
+              </motion.div>
+            </AnimatePresence>
+          </motion.button>
+
+          {/* Perspective Grid Floor */}
+          <div className="absolute bottom-0 left-0 w-full h-1/3 bg-[linear-gradient(rgba(249,115,22,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(249,115,22,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [transform:perspective(1000px)_rotateX(60deg)_scale(2)] pointer-events-none opacity-40" />
+
+          <div className="mt-32 opacity-10 flex items-center gap-4">
+            <span className="text-[10px] font-mono tracking-[1em] uppercase">Status: Terminal Omega reached</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL MINI BAR */}
+      <div className="relative py-8 bg-[#0a0f2c] border-t border-white/5 px-12 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono tracking-widest text-slate-600">
+
+        <div className="flex gap-8">
+          <span className="flex items-center gap-2">
+            <Globe className="w-3 h-3" />
+            GLOBAL LINK: 2k26
+          </span>
+          <span>LATENCY: 14MS</span>
         </div>
       </div>
     </footer>

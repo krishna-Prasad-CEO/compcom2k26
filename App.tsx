@@ -8,6 +8,7 @@ import Registration from './components/Registration.tsx';
 import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
 import BackgroundCanvas from './components/BackgroundCanvas.tsx';
+import CreatorReveal from './components/CreatorReveal.tsx';
 
 import IntroAnimation from './components/IntroAnimation.tsx';
 import {
@@ -19,18 +20,20 @@ import {
 
 const App: React.FC = () => {
   const [isIntroActive, setIsIntroActive] = useState(true);
+  const [showCreatorReveal, setShowCreatorReveal] = useState(false);
+
 
   useEffect(() => {
     // Force top position on refresh to align with intro
     window.scrollTo(0, 0);
 
-    // Disable scrolling while intro is active
-    if (isIntroActive) {
+    // Disable scrolling while intro or reveal is active
+    if (isIntroActive || showCreatorReveal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
     }
-  }, [isIntroActive]);
+  }, [isIntroActive, showCreatorReveal]);
 
   return (
     <div className="min-h-screen relative overflow-x-hidden selection:bg-orange-500 selection:text-white bg-[#020617]">
@@ -78,8 +81,10 @@ const App: React.FC = () => {
           </div>
         </main>
 
-        <Footer />
+        <Footer onShowReveal={() => setShowCreatorReveal(true)} />
       </div>
+
+      {showCreatorReveal && <CreatorReveal onClose={() => setShowCreatorReveal(false)} />}
     </div>
   );
 };
