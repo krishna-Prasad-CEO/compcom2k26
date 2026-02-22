@@ -6,9 +6,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Note: Replace these URLs with your actual local assets for best performance
 const AUDIO_URLS = {
-  AMBIENT: 'https://raw.githubusercontent.com/swostikpati/Interactive-Pyramids/main/FINAL/intense/music/space-ambient.mp3', // Space ambient
-  LAUNCH: 'https://raw.githubusercontent.com/scottydocs/star-wars-soundboard/master/audio/seismic-charge.mp3', // Deep explosion/space sound
-  SIGNAL: 'https://raw.githubusercontent.com/scottydocs/star-wars-soundboard/master/audio/blaster-firing.mp3', // Sci-fi notification
+  AMBIENT: 'https://raw.githubusercontent.com/polyfloyd/uextream/master/public/audio/space-ambient.mp3', // CC0 Space Ambient
+  LAUNCH: 'https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11_launch.mp3',        // Public Domain NASA Apollo 11 Launch
+  SIGNAL: 'https://raw.githubusercontent.com/nasa/NASA-Unity-Apace-Center/master/Assets/Audio/Ping.wav', // Public Domain NASA Ping
 };
 
 const RocketVisual: React.FC<{ className?: string }> = ({ className = "" }) => (
