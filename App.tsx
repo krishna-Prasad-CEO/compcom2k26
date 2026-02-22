@@ -81,7 +81,7 @@ const App: React.FC = () => {
           </div>
         </main>
 
-        <Footer onShowReveal={() => setShowCreatorReveal(true)} />
+        <Footer onShowReveal={() => setShowCreatorReveal(true)} isIntroActive={isIntroActive} />
       </div>
 
       {showCreatorReveal && <CreatorReveal onClose={() => setShowCreatorReveal(false)} />}
