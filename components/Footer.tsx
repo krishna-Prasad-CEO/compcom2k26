@@ -9,10 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface FooterProps {
   onShowReveal?: () => void;
-  isIntroActive?: boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ onShowReveal, isIntroActive }) => {
+const Footer: React.FC<FooterProps> = ({ onShowReveal }) => {
   const footerRef = useRef<HTMLDivElement>(null);
   const gatewayRef = useRef<HTMLDivElement>(null);
   const voidRef = useRef<HTMLDivElement>(null);
@@ -39,14 +38,6 @@ const Footer: React.FC<FooterProps> = ({ onShowReveal, isIntroActive }) => {
     mouseY.set(0);
     setIsHovered(false);
   };
-
-  useEffect(() => {
-    if (!isIntroActive) {
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 500); // Give it a moment to render
-    }
-  }, [isIntroActive]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
