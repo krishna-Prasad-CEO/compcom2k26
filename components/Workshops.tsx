@@ -24,7 +24,7 @@ const Oscilloscope: React.FC = () => {
     const bars = barsRef.current?.children;
     if (bars) {
       Array.from(bars).forEach((bar) => {
-        gsap.to(bar, {
+        gsap.to('bar', {
           height: `${Math.random() * 100}%`,
           duration: 0.2 + Math.random() * 0.3,
           repeat: -1,
