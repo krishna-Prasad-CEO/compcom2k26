@@ -98,11 +98,11 @@
 // ];
 
 // export const PLANS: PricePlan[] = [
-//   { title: 'Basic Plan', price: 249, features: 'All Tech & Non-Tech Events' },
-//   { title: 'Workshop Only', price: 149, features: 'Access to 1 Workshop' },
-//   { title: 'Pro Plan', price: 399, features: 'All Events + 1 Workshop' },
-//   { title: 'Expert Plan', price: 999, features: '3 Members + Events & Workshop' },
-//   { title: 'Elite Plan', price: 999, features: '4+1 Members Special' }
+//   { title: 'Basic Plan', price: 249, features: 'All Tech & Non-Tech Events for 1 member' },
+//   { title: 'Workshop Only', price: 149, features: '1 member Access to 1 Workshop' },
+//   { title: 'Pro Plan', price: 399, features: '1 member access to All Events + 1 Workshop' },
+//   { title: 'Expert Plan', price: 999, features: '3 Members access to all Events & 1 Workshop' },
+//   { title: 'Elite Plan', price: 999, features: '4+1 Members Special access for all events' }
 // ];
 
 import { EventData, WorkshopData, PricePlan } from './types';
@@ -118,26 +118,30 @@ export const TECH_EVENTS: EventData[] = [
   {
     id: 'innoverge',
     title: 'Project Expo',
-    description: 'Build an innovative project showcasing technical expertise, problem-solving, and creativity.',
-    category: 'TECH'
+    description: 'Showcase your innovative project with a live demonstration before an expert panel. Evaluation is based on creativity, technical depth, presentation, and real-world impact.',
+    category: 'TECH',
+    type: 'TEAM_MAX_4'
   },
   {
     id: 'tech-frontiers',
     title: 'PowerPoint Presentation',
-    description: 'Showcase knowledge and communication skills by presenting a topic with compelling slides.',
-    category: 'TECH'
+    description: 'Present advanced ideas with clarity and confidence. Judging focuses on originality, content quality, delivery, and effective Q&A handling.',
+    category: 'TECH',
+    type: 'INDIVIDUAL_OR_DUO'
   },
   {
     id: 'code-xtreme',
     title: 'Coding Contest',
-    description: 'Solve problems using C and enhance problem-solving through coding challenges.',
-    category: 'TECH'
+    description: 'Test your programming logic and debugging skills through challenging problem-solving rounds. Speed, accuracy, and analytical thinking determine the top performer.',
+    category: 'TECH',
+    type: 'SOLO'
   },
   {
     id: 'wire-wizards',
     title: 'Circuit Debugging',
-    description: 'Analyze and debug circuits to identify faults and improve design accuracy.',
-    category: 'TECH'
+    description: 'Identify faults and solve conceptual circuit challenges within a time limit. Technical precision and troubleshooting skills are key to winning.',
+    category: 'TECH',
+    type: 'SOLO'
   }
 ];
 
@@ -145,29 +149,32 @@ export const NON_TECH_EVENTS: EventData[] = [
   {
     id: 'enchanted-quest',
     title: 'Treasure Hunt',
-    description: 'Solve riddles, follow clues, and test problem-solving with teamwork.',
-    category: 'NON-TECH'
+    description: 'Follow clues, solve puzzles, and race against time to uncover the hidden treasure. Strategy, coordination, and teamwork lead to victory.',
+    category: 'NON-TECH',
+    type: 'TEAM'
   },
   {
     id: 'cinemania',
-    title: 'Movie Madness',
-    description: 'Prove your film knowledge through movie trivia and challenges.',
-    category: 'NON-TECH'
+    title: 'Movie Quiz',
+    description: 'Challenge your cinematic knowledge with exciting and competitive quiz rounds. Quick recall and sharp observation give you the winning edge.',
+    category: 'NON-TECH',
+    type: 'SOLO'
   },
   {
     id: 'sight-solve',
-    title: 'Sight & Solve',
-    description: 'Logic-based puzzles with animated visual clues.',
-    category: 'NON-TECH'
+    title: 'Connection',
+    description: 'Analyze visual clues and discover the hidden link between them. Logical reasoning and pattern recognition unlock the final answer.',
+    category: 'NON-TECH',
+    type: 'TEAM_MAX_2'
   },
   {
     id: 'visual-extraction',
-    title: 'Visual Extraction',
-    description: 'Identify famous logos with glitch and distortion effects.',
-    category: 'NON-TECH'
+    title: 'Logo Finding',
+    description: 'Identify and decode famous logos through observation and brand awareness. Attention to detail and fast recognition secure your win.',
+    category: 'NON-TECH',
+    type: 'TEAM_MAX_2'
   }
 ];
-
 export const WORKSHOPS: WorkshopData[] = [
   {
     id: 'ws-1',
@@ -201,11 +208,11 @@ export const WORKSHOPS: WorkshopData[] = [
 ];
 
 export const PLANS: PricePlan[] = [
-  { title: 'Basic Plan', price: 249, features: 'All Tech & Non-Tech Events', link: "https://docs.google.com/forms/d/e/1FAIpQLSdsX_53T4A0VvYB_ibb_H3BcSDUCf3kOzqyesXQDt04lVOL3Q/viewform?usp=publish-editor" },
-  { title: 'Workshop Only', price: 199, features: 'Access to 1 Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSdTetaGvbl51rOPWMlZLJLMtx3IOEOV0Dto1im9_A-B9dAMSw/viewform?usp=publish-editor" },
-  { title: 'Pro Plan', price: 399, features: 'All Events + 1 Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSdjOObV8alxsteNUQGr2CLlpik_EH9Qb2xFlx9Z5YdmNcCyug/viewform?usp=publish-editor" },
-  { title: 'Expert Plan', price: 999, features: '3 Members + Events & Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSfJebDbNt849-m6rofhkIOkiYJxVS06vMIF1LngyEDwqtoSmg/viewform?usp=publish-editor" },
-  { title: 'Elite Plan', price: 999, features: '4+1 Members Special', link: "https://docs.google.com/forms/d/e/1FAIpQLSd18Q7NzDEcOSst-AEh18NlaT-psstUnRqNku2pA5ZpBW5FCw/viewform?usp=publish-editor" }
+  { title: 'Basic Plan', price: 249, features: 'All Tech & Non-Tech Events for 1 member', link: "https://docs.google.com/forms/d/e/1FAIpQLSdsX_53T4A0VvYB_ibb_H3BcSDUCf3kOzqyesXQDt04lVOL3Q/viewform?usp=publish-editor" },
+  { title: 'Workshop Only', price: 199, features: '1 member Access to 1 Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSdTetaGvbl51rOPWMlZLJLMtx3IOEOV0Dto1im9_A-B9dAMSw/viewform?usp=publish-editor" },
+  { title: 'Pro Plan', price: 399, features: '1 member access to All Events + 1 Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSdjOObV8alxsteNUQGr2CLlpik_EH9Qb2xFlx9Z5YdmNcCyug/viewform?usp=publish-editor" },
+  { title: 'Expert Plan', price: 999, features: '3 Members access to all Events & 1 Workshop', link: "https://docs.google.com/forms/d/e/1FAIpQLSfJebDbNt849-m6rofhkIOkiYJxVS06vMIF1LngyEDwqtoSmg/viewform?usp=publish-editor" },
+  { title: 'Elite Plan', price: 999, features: '4+1 Members Special access for all events', link: "https://docs.google.com/forms/d/e/1FAIpQLSd18Q7NzDEcOSst-AEh18NlaT-psstUnRqNku2pA5ZpBW5FCw/viewform?usp=publish-editor" }
 ];
 
 export const CONTACTS = [

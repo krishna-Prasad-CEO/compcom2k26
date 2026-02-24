@@ -4,6 +4,7 @@ export interface EventData {
   title: string;
   description: string;
   category: 'TECH' | 'NON-TECH';
+  type: 'SOLO' | 'INDIVIDUAL_OR_DUO' | 'TEAM' | 'TEAM_MAX_2' | 'TEAM_MAX_4';
 }
 
 export interface WorkshopData {

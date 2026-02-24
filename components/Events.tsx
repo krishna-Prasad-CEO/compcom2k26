@@ -97,26 +97,37 @@ const EventCard: React.FC<{ event: typeof ALL_EVENTS[0]; index: number }> = ({ e
     >
       <div
         ref={innerRef}
-        className="relative h-full bg-slate-950/90 backdrop-blur-2xl rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 flex flex-col border border-white/5 group-hover:border-yellow-500/50 transition-colors duration-500 transform-gpu"
+        className="relative h-full bg-slate-950/95 rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 flex flex-col border border-white/5 group-hover:border-yellow-500/50 transition-colors duration-500 transform-gpu"
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div className="absolute inset-0 pointer-events-none rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden opacity-10 group-hover:opacity-20 transition-opacity">
           <div className="absolute top-0 left-0 w-full h-[2px] bg-yellow-500 animate-scan-fast" />
         </div>
 
-        <div className="flex items-center justify-between mb-6 sm:mb-8" style={{ transform: 'translateZ(30px)' }}>
+        <div className="flex items-center justify-between mb-6" style={{ transform: 'translateZ(30px)' }}>
           <div className={`text-[8px] sm:text-[10px] font-mono font-bold tracking-[0.3em] px-3 sm:px-4 py-1.5 rounded-lg border uppercase shadow-sm ${event.group === 'TECH' ? 'text-orange-500 border-orange-500/30 bg-orange-500/5' : 'text-yellow-500 border-yellow-500/30 bg-yellow-500/5'}`}>
             {event.group}
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-yellow-500 transition-colors" />
             <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-orange-500 transition-colors delay-75" />
           </div>
         </div>
 
-        <h3 className="text-xl sm:text-3xl font-orbitron font-black text-white mb-4 sm:mb-6 uppercase leading-[1.1] tracking-tighter group-hover:text-yellow-400 transition-colors duration-300" style={{ transform: 'translateZ(50px)' }}>
+        <h3 className="text-xl sm:text-3xl font-orbitron font-black text-white mb-3 uppercase leading-[1.1] tracking-tighter group-hover:text-yellow-400 transition-colors duration-300" style={{ transform: 'translateZ(50px)' }}>
           {event.title}
         </h3>
+
+        {/* Participation Highlight - Matching Color Theme */}
+        <div className="mb-6 flex items-center gap-3" style={{ transform: 'translateZ(40px)' }}>
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md border shadow-sm ${event.group === 'TECH' ? 'bg-orange-500/10 border-orange-500/30 shadow-orange-500/5' : 'bg-yellow-500/10 border-yellow-500/30 shadow-yellow-500/5'}`}>
+            <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${event.group === 'TECH' ? 'bg-orange-500' : 'bg-yellow-500'}`} />
+            <span className={`text-[9px] font-orbitron font-bold tracking-[0.2em] uppercase ${event.group === 'TECH' ? 'text-orange-400' : 'text-yellow-400'}`}>
+              {event.type.replace(/_/g, ' ')}
+            </span>
+          </div>
+          <div className={`h-px grow bg-gradient-to-r to-transparent ${event.group === 'TECH' ? 'from-orange-500/30' : 'from-yellow-500/30'}`} />
+        </div>
 
         <p className="text-xs sm:text-sm text-slate-400 font-light leading-relaxed mb-8 grow font-inter" style={{ transform: 'translateZ(20px)' }}>
           {event.description}
